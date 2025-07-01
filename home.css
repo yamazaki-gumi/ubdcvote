@@ -1,4 +1,5 @@
 body{
+<<<<<<< HEAD
 
     text-align:center;
 
@@ -27,3 +28,30 @@ div{
     box-shadow:0 0 1rem rbba(0,0,0,.5);
 
 }
+=======
+    text-align:center;
+    font-family:sans-serif;
+    display:grid;
+    place-items:center;
+    height:100vh;
+    background:#777;
+}
+a{
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	width: 120px;
+	margin: auto;
+	padding: 1rem 4rem;
+	font-weight: bold;
+	border-radius: 0.3rem;
+	border-bottom: 7px solid #0686b2;
+	background: #27acd9;
+	color: #fff;
+}
+a:hover {
+	margin-top: 6px;
+	border-bottom: 1px solid #0686b2;
+	color: #fff;
+}
+>>>>>>> 676c4f1 (ログイン画面のいくつかつくったお)
