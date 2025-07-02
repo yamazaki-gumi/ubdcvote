@@ -1,0 +1,37 @@
+/* 中央に配置するためのラッパー要素 */
+.center-wrapper {
+  display: flex; /* 子要素をフレックスボックスで配置（中央寄せしやすくする） */
+  flex-direction: column; /* 子要素を縦に並べる */
+  justify-content: center; /* 縦方向に中央寄せ */
+  align-items: center; /* 横方向に中央寄せ */
+  height: 100vh; /* 画面全体の高さに広げる（vh = viewport height） */
+  background-color: #f9f9f9; /* 背景を明るいグレーに設定 */
+  text-align: center; /* テキストを中央揃え */
+}
+
+/* 完了メッセージの見出し */
+.center-wrapper h1 {
+  font-size: 24px; /* 文字サイズを大きめにする */
+  margin-bottom: 30px; /* 下に余白を設ける（ボタンとの距離） */
+  color: #333; /* 文字色をダークグレーに */
+}
+
+/* 共通のボタンスタイル */
+.center-wrapper button {
+  margin: 10px; /* 上下左右に10pxの余白を設定（ボタン同士の間隔） */
+  padding: 10px 20px; /* 上下10px、左右20pxの内側余白 */
+  font-size: 16px; /* ボタン内の文字サイズを調整 */
+  border: none; /* 枠線を消す */
+  border-radius: 6px; /* 角を丸くする */
+  background-color: #007bff; /* ボタンの背景色（青） */
+  color: white; /* ボタン内の文字色を白にする */
+  cursor: pointer; /* マウスを合わせるとカーソルをポインターに変更 */
+  transition: background-color 0.2s ease; 
+  /* 背景色の変化に滑らかなアニメーションを付ける */
+  width: 220px; /* ボタンの幅を統一（見た目を揃える） */
+}
+
+/* ボタンにマウスを乗せたときの変化 */
+.center-wrapper button:hover {
+  background-color: #0056b3; /* ホバー時に背景色を少し暗くする */
+}
