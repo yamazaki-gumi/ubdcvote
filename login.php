@@ -1,37 +1,42 @@
-<!-- C:\xampp\htdocs\student_search\search.php -->
+<!-- C:\xampp\htdocs\student_login\login.php -->
 <?php
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo "不正なアクセスです。<a href='index.html'>戻る</a>";
+    exit();
+}
 // 入力値の取得とエスケープ
 $student_number = htmlspecialchars($_POST['student_number'], ENT_QUOTES, 'UTF-8');
+$password = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
 
 // DB接続情報
 $servername = "localhost";
 $username = "root";
-$password = ""; // XAMPPではパスワードなしがデフォルト
+$dbpassword = ""; // XAMPPでは通常パスワード無し
 $dbname = "school_db";
 
-// DBに接続
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// 接続チェック
+// MySQLに接続
+$conn = new mysqli($servername, $username, $dbpassword, $dbname);
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
 
-// プリペアドステートメントで検索（SQLインジェクション対策）
-$sql = "SELECT name FROM students WHERE student_number = ?";
+// SQLクエリ（パラメータを避けた安全処理に改善推奨）
+$sql = "SELECT name FROM students WHERE student_number = ? AND password = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $student_number);
+$stmt->bind_param("ss", $student_number, $password);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// 結果を表示
 if ($row = $result->fetch_assoc()) {
-    echo "名前： " . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8');
+    $name = $row['name'];
+    // 名前をURLに渡して次のページへ
+    header("Location: welcome.php?name=" . urlencode($name));
+    exit();
 } else {
-    echo "その学籍番号は登録されていません。";
+    echo "<p>学籍番号またはパスワードが間違っています。</p>";
+    echo "<a href='index.html'>戻る</a>";
 }
 
-// 接続を閉じる
 $stmt->close();
 $conn->close();
 ?>
