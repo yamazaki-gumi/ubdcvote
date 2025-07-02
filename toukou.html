@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SNS 投稿一覧</title>
+  <link rel="stylesheet" href="toukou.css" />
+</head>
+<body>
+  <!-- 大枠：戻るボタンだけ -->
+  <div class="outer-container">
+    <button class="back-button" onclick="history.back()">← 戻る</button>
+
+    <!-- 小枠：投稿画面など -->
+    <div class="inner-container">
+      <header>
+        <div>
+          <button id="sortBtn">並び替え: 最新順</button>
+        </div>
+        <div>
+          <button id="refreshBtn">更新</button>
+        </div>
+      </header>
+
+      <main id="postList">
+        <!-- 投稿がJavaScriptで挿入されます -->
+      </main>
+    </div>
+  </div>
+  
+  <script src="main.js"></script>
+</body>
+</html>
