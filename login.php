@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 }
 
 // SQLクエリ（パラメータを避けた安全処理に改善推奨）
-$sql = "SELECT name FROM students WHERE student_number = ? AND password = ?";
+$sql = "SELECT name, student_number FROM students WHERE student_number = ? AND password = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $student_number, $password);
 $stmt->execute();
@@ -31,7 +31,8 @@ if ($row = $result->fetch_assoc()) {
     $name = $row['name'];
     $student_number = $row['student_number'];
     // 名前をURLに渡して次のページへ
-    header("Location: gamen7.php?name=" . urlencode($name));
+    header("Location: gamen7.php?name=" . urlencode($name) . "&student_number=" . urlencode($student_number));
+
     exit();
 } else {
     echo "<p>学籍番号またはパスワードが間違っています。</p>";
