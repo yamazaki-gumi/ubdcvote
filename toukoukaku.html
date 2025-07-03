@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="toukoukaku.css">
+    <title>ボタン操作</title>
+</head>
+<body>
+    <h1>本当に投稿しますか？</h1>
+    <div class="button-container">
+        <button class="btntoukou" onclick="postAction()">投稿</button>
+        <button class="btnback12" onclick="goBack()">戻る</button>
+    </div>
+
+    <script>
+        function postAction() {
+            alert("投稿ボタンが押されました！");
+            // ここに投稿処理を追加可能
+        }
+
+        function goBack() {
+            alert("戻るボタンが押されました！");
+            // 戻る処理（例：1ページ前に戻る）
+            // window.history.back();
+        }
+    </script>
+</body>
+</html>
