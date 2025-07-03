@@ -16,6 +16,14 @@
   color: #333; /* 文字色をダークグレーに */
 }
 
+/* ✅ ボタンを横並びにするラッパー */
+.button-row {
+  display: flex;         /* 横並びにする */
+  flex-direction: row;   /* 横方向に並べる */
+  gap: 20px;             /* ボタン同士の間隔 */
+  margin-top: 10px;      /* 上に少し余白 */
+}
+
 /* 共通のボタンスタイル */
 .center-wrapper button {
   margin: 10px; /* 上下左右に10pxの余白を設定（ボタン同士の間隔） */
