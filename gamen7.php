@@ -1,3 +1,8 @@
+<?php
+$name = isset($_GET['name']) ? htmlspecialchars($_GET['name'], ENT_QUOTES, 'UTF-8') : 'ゲスト';
+$student_number = isset($_GET['student_number']) ? htmlspecialchars($_GET['student_number'], ENT_QUOTES, 'UTF-8') : '0';
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -24,5 +29,8 @@
             </div>
         </div>
     </div>
-    <button id="btn">ログアウト</button>
+    <div id="btn">
+        <button><?php echo $name; ?></button><br>
+        <button >ログアウト</button>
+    </div>
 </body>

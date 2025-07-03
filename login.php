@@ -29,8 +29,9 @@ $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
     $name = $row['name'];
+    $student_number = $row['student_number'];
     // 名前をURLに渡して次のページへ
-    header("Location: welcome.php?name=" . urlencode($name));
+    header("Location: gamen7.php?name=" . urlencode($name));
     exit();
 } else {
     echo "<p>学籍番号またはパスワードが間違っています。</p>";
