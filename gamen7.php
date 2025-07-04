@@ -20,14 +20,14 @@ $student_number = isset($_GET['student_number']) ? htmlspecialchars($_GET['stude
     <p id="text">UBDC VOTE</p>
     <div class="centering_parent ">
         <div class="button-wrap">
-            <button class="button1" onclick="vote_start()">投票する</button>
+            <button class="button1">投票する</button>
             <div class="text1">
                 <p>投票したい投票箱を選択し</p>
                 <p>投票することができます。</p>
             </div>
         </div>
         <div class="button-swap">
-            <button class="button2">投票を作成する</button>
+            <button class="button2" onclick="vote_start()">投票を作成する</button>
             <div class="text1">
                 <p>投票箱の作成や</p>
                 <p>名簿の作成ができます</p>
