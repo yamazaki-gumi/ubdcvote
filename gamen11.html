@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>UBDC VOTE</title>
+    <link rel="stylesheet" href="gamen11.css">
+</head>
+<body>
+    <div id="text">詳細作成</div>
+    <button id="btn">投稿する</button>
+<div class="profile-box">
+    <label for="photo">写真を追加：</label>
+    <input type="file" class="photo" accept="image/*">
+    <img id="preview" alt="画像プレビュー" style="display:none;">
+
+    <label for="name">名前を入力：</label>
+    <input type="text1" class="name" placeholder="名前を入力してください">
+
+    <label for="text2">テキストを入力</label>
+    <input type="text2" class="text2" placeholder="テキストを入力してください">
+</div>
+<button id="addBoxBtn">＋</button>
+<script src="gamen11.js"></script>
+</body>
+</html>
+
+
+<script>
+const fileInput = document.getElementById('photo');
+const preview = document.getElementById('preview');
+
+fileInput.addEventListener('change', function () {
+    const file = fileInput.files[0];
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';  // 画像を表示
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.style.display = 'none';
+        preview.src = '';
+        alert('画像ファイルを選択してください。');
+    }
+});
+</script>
