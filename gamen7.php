@@ -1,7 +1,17 @@
 <?php
-$name = isset($_GET['name']) ? htmlspecialchars($_GET['name'], ENT_QUOTES, 'UTF-8') : 'ゲスト';
-$student_number = isset($_GET['student_number']) ? htmlspecialchars($_GET['student_number'], ENT_QUOTES, 'UTF-8') : '0';
+session_start(); // セッション開始（必ず最初に！）
+
+// ログインしていない人をブロック
+if (!isset($_SESSION['account_number'])) {
+    header("Location: login.php"); // ← ログインページに戻す
+    exit();
+}
+
+// ログイン中のユーザー情報を使う
+$name = $_SESSION['name'];
+$account_number = $_SESSION['account_number'];
 ?>
+
 <script>
     function vote_start(){
         window.location.href="http://localhost/ubdcvote/gamen10.html"
