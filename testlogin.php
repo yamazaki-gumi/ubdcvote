@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['account_number'] = $row['account_number'];
         $_SESSION['name'] = $row['name'];
 
-        header("Location: gamen7.php");
+        header("Location: testtitle.php");
         exit();
     } else {
         $error = "学籍番号またはパスワードが間違っています。";
