@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 
 $last_vote_id = null;
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" ) {
     $title = $_POST['title'];
     $start_date = $_POST['start_date'] ?? NULL;
     $end_date = $_POST['end_date'] ?? NULL;
