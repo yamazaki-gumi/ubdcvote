@@ -39,7 +39,7 @@ $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_
 
 <h2><?php echo htmlspecialchars($title); ?> に投票</h2>
 
-<form action="do_vote.php" method="POST">
+<form action="testkannryo.php" method="POST">
 <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>">
 
     <?php while ($row = $result->fetch_assoc()): ?>
