@@ -1,27 +1,20 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['account_number'])) {
-
     header("Location: login.php");
-
     exit();
-
 }
+
+$account_number = $_SESSION['account_number'];
 
 $conn = new mysqli("localhost", "root", "", "toukounaiyou_db");
-
 if ($conn->connect_error) {
-
     die("接続失敗: " . $conn->connect_error);
-
 }
 
-// votesテーブルから全件取得
-
-$sql = "SELECT id, title, start_date, end_date FROM votes ORDER BY id DESC";
-
+// votes テーブル全件取得
+$sql = "SELECT id, title, start_date, end_date FROM votes where flag=1 ORDER BY id DESC";
 $result = $conn->query($sql);
 
 ?>
@@ -44,25 +37,56 @@ $result = $conn->query($sql);
 <th>タイトル</th>
 <th>開始日</th>
 <th>終了日</th>
+<th>状態</th>
 <th>操作</th>
 </tr>
 </thead>
 <tbody>
+
 <?php while ($row = $result->fetch_assoc()): ?>
+<?php
+    $vote_id = $row['id'];
+
+    // 🔍 投票済みチェック (vote_count を参照）
+    $check = $conn->prepare("SELECT 1 FROM vote_count WHERE vote_id = ? AND account_id = ?");
+    $check->bind_param("ii", $vote_id, $account_number);
+    $check->execute();
+    $already_voted = $check->get_result()->num_rows > 0;
+
+    // 🕒 状態の判定
+    $now = date("Y-m-d");
+    if ($now >= $row['start_date'] && $now <= $row['end_date']) {
+        $status = "集計中";
+    } else {
+        $status = "締め切り";
+    }
+?>
 <tr>
-<td><?php echo htmlspecialchars($row['id']); ?></td>
-<td><?php echo htmlspecialchars($row['title']); ?></td>
-<td><?php echo htmlspecialchars($row['start_date']); ?></td>
-<td><?php echo htmlspecialchars($row['end_date']); ?></td>
-<td>
-<!-- 投票ボタンにIDを渡す -->
-<form action="testtouhyou.php" method="GET" style="display:inline;">
-<input type="hidden" name="vote_id" value="<?php echo $row['id']; ?>">
-<button type="submit" class="btn btn-primary btn-sm">投票する</button>
-</form>
-</td>
+    <td><?= htmlspecialchars($row['id']); ?></td>
+    <td><?= htmlspecialchars($row['title']); ?></td>
+    <td><?= htmlspecialchars($row['start_date']); ?></td>
+    <td><?= htmlspecialchars($row['end_date']); ?></td>
+
+    <td><?= $status ?></td>
+
+    <td>
+        <?php if ($already_voted): ?>
+            <!-- 投票済みなら結果ページへ -->
+            <form action="testkekka.php" method="GET" style="display:inline;">
+                <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
+                <button type="submit" class="btn btn-success btn-sm">結果を見る</button>
+            </form>
+        <?php else: ?>
+            <!-- 未投票なら投票ページへ -->
+            <form action="testtouhyou.php" method="GET" style="display:inline;">
+                <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
+                <button type="submit" class="btn btn-primary btn-sm">投票する</button>
+            </form>
+        <?php endif; ?>
+    </td>
 </tr>
 <?php endwhile; ?>
+
 </tbody>
 </table>
 
@@ -70,4 +94,3 @@ $result = $conn->query($sql);
 </html>
 
 <?php $conn->close(); ?>
-

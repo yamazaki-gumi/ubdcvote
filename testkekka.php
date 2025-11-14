@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['account_number'])) {
-    header("Location: login.php");
+    header("Location: test_main.php");
     exit();
 }
 
@@ -71,7 +71,7 @@ $result2 = $stmt2->get_result();
     </tbody>
 </table>
 
-<a href="testitiran.php" class="btn btn-secondary mt-3">投票一覧に戻る</a>
+<a href="testzumi.php" class="btn btn-secondary mt-3">投票一覧に戻る</a>
 
 </body>
 </html>

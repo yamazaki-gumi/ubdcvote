@@ -48,7 +48,7 @@ try {
 
     echo "<h2>投票が完了しました！</h2>";
     echo "<a href='index.php'>戻る</a>";
-    echo "<a href='testjoukyou.php'>投稿状況確認</a>";
+    echo "<a href='testkekka.php'>投稿状況確認</a>";
 } catch (mysqli_sql_exception $e) {
     $conn->rollback();
 
