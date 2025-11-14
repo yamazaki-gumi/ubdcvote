@@ -31,6 +31,7 @@ if ($conn->connect_error) {
 <div style="margin-top: 30px;">
     <button onclick="location.href='testtitle.php'">投票作成</button>
     <button onclick="location.href='testitiran.php'">投票一覧へ</button>
-    <button onclick="location.href='login.php'">ログアウト</button>
+    <button onclick="location.href='testzumi.php'">作成した投票</button>
+    <button onclick="location.href='testlogin.php'">ログアウト</button>
 </div>
 </body>
