@@ -13,8 +13,20 @@ if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
 
-// votes テーブル全件取得
-$sql = "SELECT id, title, start_date, end_date FROM votes where flag=1 ORDER BY id DESC";
+// votes テーブル取得
+$sql = "
+SELECT 
+    v.id, 
+    v.title, 
+    v.start_date, 
+    v.end_date, 
+    a.name AS creator_name
+FROM votes v
+LEFT JOIN accounts a
+    ON v.account_id = a.account_number
+WHERE v.flag = 1
+ORDER BY v.id DESC
+";
 $result = $conn->query($sql);
 
 ?>
@@ -37,6 +49,7 @@ $result = $conn->query($sql);
 <th>タイトル</th>
 <th>開始日</th>
 <th>終了日</th>
+<th>作成者</th>
 <th>状態</th>
 <th>操作</th>
 </tr>
@@ -47,13 +60,13 @@ $result = $conn->query($sql);
 <?php
     $vote_id = $row['id'];
 
-    // 🔍 投票済みチェック (vote_count を参照）
+    //投票済みチェック (vote_count を参照）
     $check = $conn->prepare("SELECT 1 FROM vote_count WHERE vote_id = ? AND account_id = ?");
     $check->bind_param("ii", $vote_id, $account_number);
     $check->execute();
     $already_voted = $check->get_result()->num_rows > 0;
 
-    // 🕒 状態の判定
+    //状態の判定
     $now = date("Y-m-d");
     if ($now >= $row['start_date'] && $now <= $row['end_date']) {
         $status = "集計中";
@@ -66,6 +79,7 @@ $result = $conn->query($sql);
     <td><?= htmlspecialchars($row['title']); ?></td>
     <td><?= htmlspecialchars($row['start_date']); ?></td>
     <td><?= htmlspecialchars($row['end_date']); ?></td>
+    <td><?= htmlspecialchars($row['creator_name']); ?></td>
 
     <td><?= $status ?></td>
 
