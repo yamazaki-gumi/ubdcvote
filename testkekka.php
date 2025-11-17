@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 }
 
 // 投票タイトルを取得
-$stmt = $conn->prepare("SELECT title FROM votes WHERE id = ? AND account_id = ? OR end_date < CURDATE()");
+$stmt = $conn->prepare("SELECT title FROM votes WHERE id = ? AND (account_id = ? OR end_date < CURDATE())");
 $stmt->bind_param("ii", $vote_id, $account_number);
 $stmt->execute();
 $result = $stmt->get_result();
