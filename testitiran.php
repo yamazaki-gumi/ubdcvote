@@ -24,7 +24,7 @@ SELECT
 FROM votes v
 LEFT JOIN accounts a
     ON v.account_id = a.account_number
-WHERE v.flag = 1
+WHERE v.flag = 1 AND end_date > CURDATE()
 ORDER BY v.id DESC
 ";
 $result = $conn->query($sql);
@@ -66,7 +66,7 @@ $result = $conn->query($sql);
     $check->execute();
     $already_voted = $check->get_result()->num_rows > 0;
 
-    //状態の判定
+    //状態の判定＿不要な部分ではある
     $now = date("Y-m-d");
     if ($now >= $row['start_date'] && $now <= $row['end_date']) {
         $status = "集計中";
