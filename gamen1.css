@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+.button-container {
+  position: absolute;
+  top: 60%; /* 中央より下 */
+  display: flex;
+  gap: 30px;
+}
+
+.btntoukou,
+.btnback12 {
+  padding: 15px 40px;
+  font-size: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btntoukou {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btnback12 {
+  background-color: #6c757d;
+  color: white;
+}
+h1 {
+  text-align: center;
+  margin-top: 100px; /* 上からの余白も調整 */
+  font-size: 55px;
+}
