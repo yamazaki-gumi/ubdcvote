@@ -1,43 +1,64 @@
+/* === login.css (外部CSS) === */
+/* 全体 */
 body {
-    font-family: sans-serif;
-    background-color: #f0f8ff;
-    padding: 40px;
+margin: 0;
+padding: 0;
+font-family: sans-serif;
+background-color: #f4f4f4;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
 }
-
-#text {
-    font-size: 30px;
-    margin-bottom: 20px;
-    text-align: center; 
-    width: 100%;    
+ 
+ 
+/* 戻るボタン */
+.back-btn {
+position: fixed;
+top: 20px;
+right: 20px;
+padding: 10px 20px;
+background-color: #ddd;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+font-size: 14px;
 }
-
-.form-box {
-    background-color: white;
-    padding: 20px;
-    position:absolute;
-    right:470px;
-    bottom:130px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    width: 350px;
-    margin-bottom: 20px;
+ 
+ 
+/* ログインフォーム */
+.login-container {
+background: white;
+padding: 30px;
+border-radius: 10px;
+box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+text-align: center;
+width: 320px;
 }
-
-.form-row {
-    display: flex;
-    flex-direction: column; 
-    margin-bottom: 15px;
+ 
+ 
+.login-container input[type="text"],
+.login-container input[type="password"] {
+width: 90%;
+padding: 10px;
+margin-top: 5px;
+margin-bottom: 20px;
+border-radius: 5px;
+border: 1px solid #ccc;
 }
-
-.form-row label {
-    margin-bottom: 5px;
-    font-weight: bold;
+ 
+ 
+.login-btn {
+width: 100%;
+padding: 10px;
+background-color: #4CAF50;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
 }
-
-.submit-btn{
-    height:50px;
-    width:120px;
-    position:absolute;
-    bottom:60px;
-    right:600px;
+ 
+ 
+.error {
+color: red;
 }
