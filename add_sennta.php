@@ -8,16 +8,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title_id = $_POST['title_id'];
     $senntaku = $_POST['senntaku'];
 
+    // sennta テーブルに vote_count がある前提
     $stmt = $conn->prepare("INSERT INTO sennta (senntaku, title_id, vote_count) VALUES (?, ?, 0)");
     $stmt->bind_param("si", $senntaku, $title_id);
 
     if ($stmt->execute()) {
-        echo "<p class='text-success'>選択肢追加成功: " . htmlspecialchars($senntaku) . "</p>";
+        // 成功 → 新規IDだけ返す（JS側で削除に使う）
+        //echo $stmt->insert_id;
     } else {
-        echo "<p class='text-danger'>追加エラー: " . $stmt->error . "</p>";
+        // 失敗 → エラー文字列
+        echo "ERROR";
     }
 
     $stmt->close();
 }
+
 $conn->close();
 ?>

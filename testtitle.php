@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// ログインチェック
 if (!isset($_SESSION['account_number'])) {
     header("Location: login.php");
     exit();
@@ -17,7 +18,7 @@ if ($conn->connect_error) {
 $last_vote_id = null;
 
 /* ---------------------------------------------------
-    1) 完了ボタン押されたら flag=1 にして test_main.php へ
+    完了ボタン押されたら test_main.php へ
 -----------------------------------------------------*/
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finish_vote_id'])) {
     $finish_vote_id = $_POST['finish_vote_id'];
@@ -32,19 +33,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finish_vote_id'])) {
 }
 
 /* ---------------------------------------------------
-    2) タイトルを登録（選択肢モーダルを出す）
+    タイトルを登録（選択肢モーダルへ）
 -----------------------------------------------------*/
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
     $title = $_POST['title'];
-    
-    // 開始日が未入力ならNULL
+
+    // 開始/終了日時
     $start_date = $_POST['start_date'] ?? NULL;
-    // 終了日が未入力なら最大日付（例: 9999-12-31）
     $end_date = !empty($_POST['end_date']) ? $_POST['end_date'] : '9999-12-31';
 
     $stmt = $conn->prepare(
-        "INSERT INTO votes (title, start_date, end_date, account_id, flag) 
-        VALUES (?, ?, ?, ?, 0)"
+        "INSERT INTO votes (title, start_date, end_date, account_id, flag)
+         VALUES (?, ?, ?, ?, 0)"
     );
     $stmt->bind_param("ssss", $title, $start_date, $end_date, $account_number);
 
@@ -72,6 +72,7 @@ $conn->close();
     <h2>タイトル登録</h2>
     <h1>ようこそ <?php echo htmlspecialchars($name); ?> さん</h1>
 
+    <!-- タイトル入力フォーム -->
     <form method="POST" action="">
         タイトル：<input type="text" name="title" required class="form-control mb-2">
         開始日：<input type="date" name="start_date" class="form-control mb-2">
@@ -80,9 +81,8 @@ $conn->close();
     </form>
 </div>
 
-
 <?php if ($last_vote_id): ?>
-<!-- 🔽 選択肢追加モーダル -->
+<!-- モーダル（選択肢追加） -->
 <div class="modal fade show" id="senntaModal" tabindex="-1" style="display:block;" aria-modal="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -103,15 +103,15 @@ $conn->close();
 
         <hr>
 
-        <!-- 🔽 選択肢一覧 -->
+        <!-- 選択肢一覧 -->
         <h5>追加した選択肢：</h5>
         <div id="senntaList">
-            <!-- AJAXでここに追加表示される -->
+            <!-- ここに動的に追加 -->
         </div>
 
         <hr>
 
-        <!-- 🔽 完了ボタン -->
+        <!-- 完了ボタン -->
         <form method="POST" class="mt-2">
             <input type="hidden" name="finish_vote_id" value="<?php echo $last_vote_id; ?>">
             <button type="submit" class="btn btn-primary w-100">完了</button>
@@ -123,25 +123,69 @@ $conn->close();
 </div>
 <?php endif; ?>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <?php if ($last_vote_id): ?>
 <script>
+/* ----------------------------------------
+   選択肢 最大 5 個制限 + 削除対応
+----------------------------------------- */
+const MAX_SENNTAX = 5;
+
+// 個数チェック（追加・削除のたびに呼ぶ）
+function checkSenntaLimit() {
+    const count = $('#senntaList').children().length;
+
+    if (count >= MAX_SENNTAX) {
+        $('input[name="senntaku"]').prop('disabled', true);
+        $('#senntaForm button').prop('disabled', true).addClass('btn-secondary');
+    } else {
+        $('input[name="senntaku"]').prop('disabled', false);
+        $('#senntaForm button').prop('disabled', false).removeClass('btn-secondary');
+    }
+}
+
 // 選択肢追加
 $('#senntaForm').on('submit', function(e){
     e.preventDefault();
+
     $.post('add_sennta.php', $(this).serialize(), function(data){
         $('#senntaResult').html(data);
 
-        // 入力した選択肢を取得して一覧に追加
         const text = $('input[name="senntaku"]').val();
-        $('#senntaList').append("<div class='alert alert-secondary py-1 mb-1'>" + text + "</div>");
+
+        // 表示追加（削除ボタン付き）
+        $('#senntaList').append(`
+            <div class="alert alert-secondary py-1 mb-1 d-flex justify-content-between align-items-center">
+                ${text}
+                <button class="btn btn-sm btn-danger delete-btn" data-id="${data}">
+                    削除
+                </button>
+            </div>
+        `);
 
         $('#senntaForm')[0].reset();
+
+        checkSenntaLimit();
     });
 });
+
+// 削除ボタン（動的要素のため on で処理）
+$('#senntaList').on('click', '.delete-btn', function(){
+    const sennta_id = $(this).data('id');
+    const targetDiv = $(this).closest('.alert');
+
+    $.post('delete_sennta.php', { id: sennta_id }, function(res){
+        if (res.trim() === 'OK') {
+            targetDiv.remove();
+            checkSenntaLimit();
+        }
+    });
+});
+
+// 初期ロード時にチェック
+checkSenntaLimit();
 </script>
 <?php endif; ?>
 
