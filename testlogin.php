@@ -16,24 +16,31 @@ if ($conn->connect_error) {
 // POST送信時のみ処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // 入力値取得（存在しない場合は空文字）
+    // 入力値取得
     $account_number = $_POST['account_number'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // SQL 文
-    $sql = "SELECT name, account_number FROM accounts WHERE account_number = ? AND password = ?";
+    // パスワードハッシュ取得
+    $sql = "SELECT name, account_number, password FROM accounts WHERE account_number = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("is", $account_number, $password);
+    $stmt->bind_param("i", $account_number);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
-        // ログイン成功
-        $_SESSION['account_number'] = $row['account_number'];
-        $_SESSION['name'] = $row['name'];
 
-        header("Location: test_main.php");
-        exit();
+        // パスワード検証
+        if (password_verify($password, $row['password'])) {
+            // ログイン成功
+            $_SESSION['account_number'] = $row['account_number'];
+            $_SESSION['name'] = $row['name'];
+
+            header("Location: test_main.php");
+            exit();
+        } else {
+            $error = "学籍番号またはパスワードが間違っています。";
+        }
+
     } else {
         $error = "学籍番号またはパスワードが間違っています。";
     }
