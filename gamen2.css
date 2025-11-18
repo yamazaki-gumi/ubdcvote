@@ -1,64 +1,103 @@
-/* === login.css (外部CSS) === */
-/* 全体 */
+/* ===============================
+   全体（中央寄せレイアウト）
+================================= */
 body {
-margin: 0;
-padding: 0;
-font-family: sans-serif;
-background-color: #f4f4f4;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
- 
- 
-/* 戻るボタン */
-.back-btn {
-position: fixed;
-top: 20px;
-right: 20px;
-padding: 10px 20px;
-background-color: #ddd;
-border: none;
-border-radius: 6px;
-cursor: pointer;
-font-size: 14px;
+
+/* ===============================
+   戻るボタン（右上固定）
+================================= */
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
 }
- 
- 
-/* ログインフォーム */
-.login-container {
-background: white;
-padding: 30px;
-border-radius: 10px;
-box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-text-align: center;
-width: 320px;
+.back-button:hover {
+    background-color: #bbb;
 }
- 
- 
-.login-container input[type="text"],
-.login-container input[type="password"] {
-width: 90%;
-padding: 10px;
-margin-top: 5px;
-margin-bottom: 20px;
-border-radius: 5px;
-border: 1px solid #ccc;
+
+/* ===============================
+   登録フォームの中央ボックス
+================================= */
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 320px;
 }
- 
- 
-.login-btn {
-width: 100%;
-padding: 10px;
-background-color: #4CAF50;
-color: white;
-border: none;
-border-radius: 5px;
-cursor: pointer;
+
+.form-container {
+    width: 350px;
+    margin: 60px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
 }
- 
- 
-.error {
-color: red;
+
+h2 {
+    margin-bottom: 20px;
+}
+
+/* ===============================
+   入力欄
+================================= */
+form input {
+    width: 90%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+/* ===============================
+   保存メッセージ
+================================= */
+.success-message {
+    text-align: center;
+    color: green;
+    font-weight: bold;
+}
+
+.error-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+
+/* ===============================
+   登録ボタン
+================================= */
+#submitBtn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50; /* ログインボタンと同じ色 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+#submitBtn:hover {
+    background-color: #45a049;
 }

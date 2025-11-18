@@ -4,26 +4,36 @@ if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
 
-// POSTが送信されたら保存
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $account_number = $_POST['account_number'];
-    $name = $_POST['name'] ?? NULL;
-    $class_id = $_POST['class_id'] ?? NULL;
-    $password = $_POST['password'];
+    // ▼ 入力値の取得
+    $account_number = trim($_POST['account_number']);
+    $name = trim($_POST['name']);
+    $class_id = trim($_POST['class_id']);
+    $password = trim($_POST['password']);
 
-    $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
-    
-    $stmt = $conn->prepare("INSERT INTO accounts (account_number, name, class_id, password) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("isss", $account_number, $name, $class_id, $hashed_pass);
-
-    if ($stmt->execute()) {
-        echo "<p>保存できました！</p>";
+    // ▼ 未入力チェック
+    if ($account_number === "" || $name === "" || $class_id === "" || $password === "") {
+        echo "<p class='error-message' style='color:red;'>※すべて入力してください。</p>";
     } else {
-        echo "<p>保存エラー: " . $stmt->error . "</p>";
-    }
 
-    $stmt->close();
+        // ▼ DB登録処理
+        $stmt = $conn->prepare("INSERT INTO accounts (account_number, name, class_id, password) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("isss", $account_number, $name, $class_id, $password);
+
+        if ($stmt->execute()) {
+            header("Location: gamen2-1.php");
+            exit();
+            // ▼ 必要ならここで画面遷移もできる
+            // header("Location: gamenX.php");
+            // exit();
+
+        } else {
+            echo "<p class='error-message'>保存エラー: " . $stmt->error . "</p>";
+        }
+
+        $stmt->close();
+    }
 }
 
 $conn->close();
@@ -33,19 +43,33 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>アカウント登録フォーム</title>
-    <link rel="stylesheet" href="gamen3.css"> <!-- 外部CSS -->
+    <link rel="stylesheet" href="gamen3.css">
 </head>
 <body>
 
-<h2>アカウント登録</h2>
+<button class="back-button" onclick="location.href='gamen1.php'">戻る</button>
 
-<form action="testtouroku.php" method="POST">
-    アカウント番号（4桁）:<input type="text" name="account_number" required><br><br>
-    名前：<input type="text" name="name"><br><br>
-    クラス：<input type="text" name="class_id"><br><br>
-    パスワード：<input type="text" name="password"><br><br>
-    <button type="submit">登録</button>
-</form>
+<div class="form-container">
+    <h2>アカウント登録</h2>
 
+    <form id="regForm" action="testtouroku.php" method="POST">
+
+        <label>アカウント番号（4桁）：</label>
+        <input type="text" name="account_number"><br>
+
+        <label>名前：</label>
+        <input type="text" name="name"><br>
+
+        <label>クラス：</label>
+        <input type="text" name="class_id"><br>
+
+        <label>パスワード：</label>
+        <input type="text" name="password"><br>
+
+        <button type="submit" id="submitBtn">登録</button>
+    </form>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
