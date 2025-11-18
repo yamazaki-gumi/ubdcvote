@@ -73,7 +73,7 @@ h1 {
     <button onclick="location.href='testitiran.php'">投票一覧へ</button>
     <button onclick="location.href='testzumi.php'">作成した投票</button>
     <button onclick="location.href='testsugi.php'">投票結果</button>
-    <button onclick="location.href='testlogin.php'">ログアウト</button>
+    <button onclick="location.href='testsetting.php'">アカウント設定</button>
 </div>
 
 </body>
