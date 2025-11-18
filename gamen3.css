@@ -1,0 +1,76 @@
+/* ------------ 全体レイアウト ------------ */
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+ 
+/* ------------ 中央コンテナ ------------ */
+.form-container {
+    width: 350px;
+    margin: 60px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+ 
+h2 {
+    margin-bottom: 20px;
+}
+ 
+/* ------------ 入力欄 ------------ */
+form input {
+    width: 90%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+ 
+/* ------------ 保存メッセージ ------------ */
+.success-message {
+    text-align: center;
+    color: green;
+    font-weight: bold;
+}
+ 
+.error-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+ 
+/* ------------ 登録ボタン ------------ */
+#submitBtn {
+    width: 100%;
+    padding: 10px;
+    background-color: #0078ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 17px;
+    cursor: pointer;
+}
+#submitBtn:hover {
+    background-color: #005fcc;
+}
+ 
+/* ------------ 戻るボタン（右上） ------------ */
+.back-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 8px 15px;
+    background-color: #888;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.back-button:hover {
+    background-color: #555;
+}
