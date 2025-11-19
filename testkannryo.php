@@ -59,3 +59,21 @@ try {
 
 $conn->close();
 ?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投稿完了</title>
+    <link rel="stylesheet" href="gamen9-1.css">
+</head>
+<body>
+ 
+    <div class="container">
+        <h1>投稿が完了しました</h1>
+        <button id="backBtn">戻る</button>
+    </div>
+ 
+    <script src="gamen9-1.js"></script>
+</body>
+</html>
