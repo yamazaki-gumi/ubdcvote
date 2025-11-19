@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 // 削除SQL
-$sql = "DELETE FROM accounts WHERE account_number = ?";
+$sql = "DELETE FROM accounts WHERE account_number = ? AND account_number=account_id";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $account_number);

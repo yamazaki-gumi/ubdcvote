@@ -11,16 +11,18 @@ if (!isset($_SESSION['account_number'])) {
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<link rel="stylesheet" href="testdeletekakunin.css">
 <meta charset="UTF-8">
-<title>アカウント削除</title>
+
 </head>
 <body>
+<h2 class="h2">アカウント削除</h>
 <h2>⚠ アカウント削除確認</h2>
 <p>本当にアカウントを削除しますか？ この操作は元に戻せません。</p>
 
 <form action="testdelete.php" method="post">
-    <button type="submit" name="delete" value="1">削除する</button>
-    <button type="button" onclick="location.href='home.php'">キャンセル</button>
+    <button class="btndelete"type="submit" name="delete" value="1">削除する</button>
+    <button class="btncansel"type="button" onclick="location.href='testsetting.php'">キャンセル</button>
 </form>
 
 </body>

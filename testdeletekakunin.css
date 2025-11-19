@@ -1,0 +1,60 @@
+/* 基本レイアウト */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    background: #f8f9fa; /* 確認用の背景色 */
+}
+
+/* ボタン配置 */
+.button-container {
+    position: absolute;
+    top: 60%;
+    display: flex;
+    gap: 30px;
+}
+
+/* ボタン共通 */
+.btndelete,
+.btnlogout {
+    padding: 15px 40px;
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* 個別 */
+.btndelete {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btncansel {
+    background-color: #6c757d;
+    color: white;
+}
+h2.h2 {
+    font-size: 40px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 50px;
+}
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.back-button:hover {
+    background-color: #bbb;
+}

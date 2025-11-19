@@ -45,7 +45,6 @@ $result = $conn->query($sql);
 <table class="table table-bordered">
 <thead>
 <tr>
-<th>ID</th>
 <th>タイトル</th>
 <th>開始日</th>
 <th>終了日</th>
@@ -75,7 +74,6 @@ $result = $conn->query($sql);
     }
 ?>
 <tr>
-    <td><?= htmlspecialchars($row['id']); ?></td>
     <td><?= htmlspecialchars($row['title']); ?></td>
     <td><?= htmlspecialchars($row['start_date']); ?></td>
     <td><?= htmlspecialchars($row['end_date']); ?></td>

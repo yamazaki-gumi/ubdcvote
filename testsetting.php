@@ -17,14 +17,19 @@ if ($conn->connect_error) {
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>ホーム</title>
+
+<!-- Bootstrap（先）-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- 自分のCSS（後） キャッシュ回避パラメータ付き -->
+<link rel="stylesheet" href="testsetting.css?ver=20251119">
 </head>
 <body>
-<h1>アカウント設定</h1>
-<!-- === ページ移動ボタン === -->
-<div style="margin-top: 30px;">
-    <button onclick="location.href='testdeletekakunin.php'">アカウント削除</button>
-    <button onclick="location.href='testlogin.php'">ログアウト</button>
-</div>
+    <h1 class="h1">アカウント設定</h1>
+    <div class="button-container">
+        <button class="btndelete" onclick="location.href='testdeletekakunin.php'">アカウント削除</button>
+        <button class="btnlogout" onclick="location.href='testlogin.php'">ログアウト</button>
+    </div>
+    <button class="back-button" onclick="location.href='test_main.php'">戻る</butto>
 </body>
+</html>

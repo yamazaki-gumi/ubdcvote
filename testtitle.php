@@ -10,16 +10,18 @@ if (!isset($_SESSION['account_number'])) {
 $name = $_SESSION['name'];
 $account_number = $_SESSION['account_number'];
 
+// ---------------------------
+// DB接続
 $conn = new mysqli("localhost", "root", "", "toukounaiyou_db");
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
 
 $last_vote_id = null;
+$show_error = false;
 
-/* ---------------------------------------------------
-    完了ボタン押されたら test_main.php へ
------------------------------------------------------*/
+// ---------------------------
+// 完了ボタン押されたら test_main.php へ
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finish_vote_id'])) {
     $finish_vote_id = $_POST['finish_vote_id'];
 
@@ -32,31 +34,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finish_vote_id'])) {
     exit();
 }
 
-/* ---------------------------------------------------
-    タイトルを登録（選択肢モーダルへ）
------------------------------------------------------*/
+// ---------------------------
+// タイトル・日付登録
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
-    $title = $_POST['title'];
 
-    // 開始/終了日時
-    $start_date = $_POST['start_date'] ?? NULL;
-    $end_date = !empty($_POST['end_date']) ? $_POST['end_date'] : '9999-12-31';
+    $title = isset($_POST['title']) ? trim($_POST['title']) : '';
+    $start_date = isset($_POST['start_date']) ? trim($_POST['start_date']) : '';
+    $end_date = isset($_POST['end_date']) ? trim($_POST['end_date']) : '';
 
-    $stmt = $conn->prepare(
-        "INSERT INTO votes (title, start_date, end_date, account_id, flag)
-         VALUES (?, ?, ?, ?, 0)"
-    );
-    $stmt->bind_param("ssss", $title, $start_date, $end_date, $account_number);
-
-    if ($stmt->execute()) {
-        $last_vote_id = $conn->insert_id;
+    // 3つすべて必須
+    if (empty($title) || empty($start_date) || empty($end_date)) {
+        $show_error = true;
     } else {
-        echo "<p>保存エラー: " . $stmt->error . "</p>";
-    }
+        // 投票データを登録
+        $stmt = $conn->prepare(
+            "INSERT INTO votes (title, start_date, end_date, account_id, flag)
+             VALUES (?, ?, ?, ?, 0)"
+        );
+        $stmt->bind_param("ssss", $title, $start_date, $end_date, $account_number);
 
-    $stmt->close();
+        if ($stmt->execute()) {
+            $last_vote_id = $conn->insert_id; // モーダル表示用
+        } else {
+            echo "<p>保存エラー: " . $stmt->error . "</p>";
+        }
+
+        $stmt->close();
+    }
 }
 
+// ---------------------------
+// DB接続終了
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -72,11 +80,27 @@ $conn->close();
     <h2>タイトル登録</h2>
     <h1>ようこそ <?php echo htmlspecialchars($name); ?> さん</h1>
 
+    <!-- エラーメッセージ -->
+    <?php if ($show_error): ?>
+        <div class="alert alert-danger">
+            タイトル・開始日・終了日のすべてを入力してください。
+        </div>
+    <?php endif; ?>
+
     <!-- タイトル入力フォーム -->
     <form method="POST" action="">
-        タイトル：<input type="text" name="title" required class="form-control mb-2">
-        開始日：<input type="date" name="start_date" class="form-control mb-2">
-        終了日：<input type="date" name="end_date" class="form-control mb-2">
+        <div class="mb-2">
+            <label>タイトル：</label>
+            <input type="text" name="title" required class="form-control">
+        </div>
+        <div class="mb-2">
+            <label>開始日：</label>
+            <input type="date" name="start_date" required class="form-control">
+        </div>
+        <div class="mb-2">
+            <label>終了日：</label>
+            <input type="date" name="end_date" required class="form-control">
+        </div>
         <button type="submit" class="btn btn-primary">選択肢を追加</button>
     </form>
 </div>
@@ -95,7 +119,10 @@ $conn->close();
         <!-- 選択肢入力フォーム -->
         <form id="senntaForm">
             <input type="hidden" name="title_id" value="<?php echo $last_vote_id; ?>">
-            選択肢：<input type="text" name="senntaku" class="form-control mb-2" required>
+            <div class="mb-2">
+                <label>選択肢：</label>
+                <input type="text" name="senntaku" class="form-control" required>
+            </div>
             <button type="submit" class="btn btn-success">追加</button>
         </form>
 
