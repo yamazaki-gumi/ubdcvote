@@ -11,7 +11,7 @@ if (!isset($_SESSION['account_number'])) {
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<link rel="stylesheet" href="testdeletekakunin.css">
+<link rel="stylesheet" href="testdeletekakunin.css?v=<?php echo time(); ?>">
 <meta charset="UTF-8">
 
 </head>
