@@ -1,60 +1,70 @@
-/* 基本レイアウト */
+/* ===============================
+   全体レイアウト
+================================= */
 body {
     margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f4f4f4;
+
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    position: relative;
-    background: #f8f9fa; /* 確認用の背景色 */
+    flex-direction: column;
+    align-items: center;      /* 中央に寄せる */
+    position: relative;       /* ボタン絶対配置に必要 */
 }
 
-/* ボタン配置 */
-.button-container {
-    position: absolute;
-    top: 60%;
-    display: flex;
-    gap: 30px;
-}
-
-/* ボタン共通 */
-.btndelete,
-.btnlogout {
-    padding: 15px 40px;
-    font-size: 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-/* 個別 */
-.btndelete {
-    background-color: #6c757d;
-    color: white;
-}
-
-.btncansel {
-    background-color: #6c757d;
-    color: white;
-}
+/* ===============================
+   タイトル（上部中央）
+================================= */
 h2.h2 {
     font-size: 40px;
     color: #333;
     font-weight: bold;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 60px;
 }
-.back-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    background-color: #ddd;
+
+h2 {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+p {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+/* ===============================
+   ボタンを中央より下（60%）に配置
+================================= */
+form {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 30px;  /* ボタン間の余白 */
+}
+
+/* ===============================
+   ボタン共通デザイン
+================================= */
+.btndelete,
+.btncansel {
+    padding: 15px 40px;
+    font-size: 20px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    background-color: #6c757d;
+    color: white;
 }
-.back-button:hover {
-    background-color: #bbb;
+
+.btndelete:hover,
+.btncansel:hover {
+    opacity: 0.8;
 }
