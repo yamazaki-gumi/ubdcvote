@@ -1,6 +1,6 @@
 <?php
 session_start();
- 
+//aaaaa
 // ログインチェック
 if (!isset($_SESSION['account_number'])) {
     header("Location: testlogin.php");
