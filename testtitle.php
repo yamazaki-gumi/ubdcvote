@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
  
 <!-- 外部CSS -->
-<link rel="stylesheet" href="gamen10.css">
+<link rel="stylesheet" href="gamen10.css?v=<?php echo time(); ?>">
  
 </head>
 <body>
