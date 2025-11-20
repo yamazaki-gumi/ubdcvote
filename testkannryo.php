@@ -40,7 +40,7 @@ try {
     $conn->commit();
 
     echo "<h2>投票が完了しました！</h2>";
-    echo "<a href='index.php'>戻る</a><br>";
+    echo "<a href='test_main'>戻る</a><br>";
     echo "<a href='testkekka.php'>投稿状況確認</a>";
 
 } catch (mysqli_sql_exception $e) {
