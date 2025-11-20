@@ -3,7 +3,7 @@ session_start();
 
 //セッション失敗
 if (!isset($_SESSION['account_number'])) {
-    header("Location: login.php");
+    header("Location: gamen1.php");
     exit();
 }
 
@@ -27,12 +27,12 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="gamen2-1.css">
 </head>
 <body>
- 
-    <div class="container">
-        <h1>登録完了しました</h1>
-        <button id="backBtn">戻る</button>
-    </div>
- 
+
+<div class="container">
+    <h1>登録完了しました</h1>
+    <button id="backBtn" >戻る</button>
+</div>
+
     <script src="gamen2-1.js"></script>
 </body>
 </html>
