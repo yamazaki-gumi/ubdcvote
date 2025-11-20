@@ -1,5 +1,8 @@
 <?php
 session_start(); // セッション開始
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
 
 // DB接続情報
 $servername = "localhost";
