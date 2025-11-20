@@ -1,126 +1,96 @@
-* {
-    box-sizing: border-box;
-}
-
+/* style.css */
+ 
 body {
-    height: 100vh;
+    background: #f7f7f7;
+    font-family: "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+}
+ 
+/* container center */
+.container-center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+ 
+/* main box */
+.main-box {
+    width: 480px;
+    background: #fff;
+    padding: 24px;
+    border-radius: 10px;
+    margin-top: 40px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    text-align: center;
+}
+ 
+/* input small used for input widths */
+.input-small {
+    width: 320px;
+    margin: 6px auto;
+}
+ 
+/* global return button (screen top-right) */
+.return-btn {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 2000;
+}
+ 
+/* option box (the former modal area) */
+.option-box {
+    width: 520px;
+    background: #fff;
+    padding: 18px;
+    border-radius: 10px;
+    margin: 18px auto 40px auto;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+ 
+/* header layout inside option box */
+.option-header h4 {
     margin: 0;
-    background-color: #87cefa;
-    font-family: sans-serif;
-    position: relative;
+}
+ 
+#voteMeta {
+    margin-top: 6px;
+    font-size: 0.9rem;
+}
+ 
+/* change form wrap */
+#changeFormWrap .form-control {
+    width: 100%;
+}
+ 
+/* sennta list */
+#senntaList {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 8px;
+    text-align: left;
+    padding-right: 6px; /* for scrollbar */
+}
+ 
+/* individual choice item */
+.sennta-item {
+    background: #f1f1f1;
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 6px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
-
-#backBtn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: white;
-    color: black;
-    cursor: pointer;
-    border: 2px solid black;
+ 
+/* smaller buttons */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
 }
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+ 
+/* small message */
+#changeMsg {
+    font-size: 0.9rem;
 }
-
-#text {
-    height:130px;
-    font-size: 45px;
-    margin-bottom: 20px;
-    color: #333;
-    font-weight: bold;
-}
-
-.textbox {
-    height: 60px;
-    width: 500px;
-    padding: 10px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: 2px solid black;
-    margin-bottom: 30px;
-}
-
-.date-row {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.date-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.date-container input[type="date"] {
-    width: 240px;
-    padding: 15px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: 1px solid black;
-}
-
-.date-separator {
-    font-size: 24px;
-    padding: 0 10px;
-    display: flex;
-    align-items: center;
-    height: 100%;
-}
-
-.textbox1 {
-    height: 60px;
-    width: 500px;
-    padding: 10px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: 2px solid black;
-    margin-bottom: 30px;
-}
-
-.button1{
-    font-size:16px;
-    height:50px;
-    width:120px;
-    background-color: white;
-    border: 2px solid black;
-}
-
-input {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    }
-
-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    }
-
-select {
-    width: 400px;
-    height:30px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    }
-
-#backBtn:active,
-.button1:active {
-    transform: scale(0.97);
-    background-color: white;
-}
+ 
+ 

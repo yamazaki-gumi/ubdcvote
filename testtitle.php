@@ -1,220 +1,187 @@
 <?php
 session_start();
-
+ 
 // ログインチェック
 if (!isset($_SESSION['account_number'])) {
     header("Location: login.php");
     exit();
 }
-
+ 
 $name = $_SESSION['name'];
 $account_number = $_SESSION['account_number'];
-
-// ---------------------------
-// DB接続
+ 
 $conn = new mysqli("localhost", "root", "", "toukounaiyou_db");
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
-
+ 
 $last_vote_id = null;
-$show_error = false;
-
-// ---------------------------
-// 完了ボタン押されたら test_main.php へ
+ 
+/* ---------------------------------------------------
+    完了ボタン押されたら test_main.php へ
+-----------------------------------------------------*/
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finish_vote_id'])) {
     $finish_vote_id = $_POST['finish_vote_id'];
-
+ 
     $stmt = $conn->prepare("UPDATE votes SET flag = 1 WHERE id = ?");
     $stmt->bind_param("i", $finish_vote_id);
     $stmt->execute();
     $stmt->close();
-
+ 
     header("Location: test_main.php");
     exit();
 }
-
-// ---------------------------
-// タイトル・日付登録
+ 
+/* ---------------------------------------------------
+    タイトルを登録（選択肢入力ボックス表示）
+-----------------------------------------------------*/
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
-
-    $title = isset($_POST['title']) ? trim($_POST['title']) : '';
-    $start_date = isset($_POST['start_date']) ? trim($_POST['start_date']) : '';
-    $end_date = isset($_POST['end_date']) ? trim($_POST['end_date']) : '';
-
-    // 3つすべて必須
-    if (empty($title) || empty($start_date) || empty($end_date)) {
-        $show_error = true;
+    $title = $_POST['title'];
+ 
+    // 開始/終了日時
+    $start_date = $_POST['start_date'] ?? NULL;
+    $end_date = !empty($_POST['end_date']) ? $_POST['end_date'] : '9999-12-31';
+ 
+    $stmt = $conn->prepare(
+        "INSERT INTO votes (title, start_date, end_date, account_id, flag)
+         VALUES (?, ?, ?, ?, 0)"
+    );
+    $stmt->bind_param("ssss", $title, $start_date, $end_date, $account_number);
+ 
+    if ($stmt->execute()) {
+        $last_vote_id = $conn->insert_id;
     } else {
-        // 投票データを登録
-        $stmt = $conn->prepare(
-            "INSERT INTO votes (title, start_date, end_date, account_id, flag)
-             VALUES (?, ?, ?, ?, 0)"
-        );
-        $stmt->bind_param("ssss", $title, $start_date, $end_date, $account_number);
-
-        if ($stmt->execute()) {
-            $last_vote_id = $conn->insert_id; // モーダル表示用
-        } else {
-            echo "<p>保存エラー: " . $stmt->error . "</p>";
-        }
-
-        $stmt->close();
+        echo "<p>保存エラー: " . $stmt->error . "</p>";
     }
+ 
+    $stmt->close();
 }
-
-// ---------------------------
-// DB接続終了
-$conn->close();
+ 
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>タイトル登録</title>
+ 
+<!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+<!-- 外部CSS -->
+<link rel="stylesheet" href="gamen10.css">
+ 
 </head>
 <body>
-
-<div class="container mt-4">
-    <h2>タイトル登録</h2>
-    <h1>ようこそ <?php echo htmlspecialchars($name); ?> さん</h1>
-
-    <!-- エラーメッセージ -->
-    <?php if ($show_error): ?>
-        <div class="alert alert-danger">
-            タイトル・開始日・終了日のすべてを入力してください。
+ 
+<!-- 画面右上の戻るボタン（常に表示） -->
+<a href="test_main.php" class="btn btn-secondary return-btn">戻る</a>
+ 
+<div class="container-center">
+    <div class="main-box">
+        <h2>タイトル登録</h2>
+        <h1>ようこそ <?php echo htmlspecialchars($name); ?> さん</h1>
+ 
+        <!-- タイトル入力フォーム -->
+        <form method="POST" action="">
+            <input type="text" name="title" class="form-control input-small mb-2" placeholder="タイトル" required>
+            <input type="date" name="start_date" class="form-control input-small mb-2" placeholder="開始日">
+            <input type="date" name="end_date" class="form-control input-small mb-2" placeholder="終了日">
+            <button type="submit" class="btn btn-primary mt-2">選択肢を追加</button>
+        </form>
+    </div>
+</div>
+ 
+<?php if ($last_vote_id): ?>
+ 
+<?php
+$vote_title = "";
+$vote_start_date = "";
+$vote_end_date = "";
+ 
+// 投票情報を取得
+$stmt = $conn->prepare("
+    SELECT title, start_date, end_date
+    FROM votes
+    WHERE id = ?
+");
+$stmt->bind_param("i", $last_vote_id);
+$stmt->execute();
+$stmt->bind_result($vote_title, $vote_start_date, $vote_end_date);
+$stmt->fetch();
+$stmt->close();
+?>
+ 
+<!-- 選択肢追加ボックス（モーダル廃止 → ページ内固定フォーム） -->
+<div class="option-box">
+    <div class="option-header d-flex justify-content-between align-items-start">
+        <div>
+            <h4 id="optionHeaderTitle">選択肢を追加（投票ID: <?php echo $last_vote_id; ?>）</h4>
+            <div class="small text-muted" id="voteMeta">
+                タイトル：<span id="displayTitle"><?php echo htmlspecialchars($vote_title); ?></span>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                開始日：<span id="displayStart"><?php echo htmlspecialchars($vote_start_date); ?></span>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                終了日：<span id="displayEnd"><?php echo htmlspecialchars($vote_end_date); ?></span>
+            </div>
         </div>
-    <?php endif; ?>
-
-    <!-- タイトル入力フォーム -->
-    <form method="POST" action="">
-        <div class="mb-2">
-            <label>タイトル：</label>
-            <input type="text" name="title" required class="form-control">
+ 
+        <!-- 右上に変更ボタン -->
+        <div>
+            <button id="changeBtn" class="btn btn-outline-primary btn-sm">変更</button>
         </div>
-        <div class="mb-2">
-            <label>開始日：</label>
-            <input type="date" name="start_date" required class="form-control">
-        </div>
-        <div class="mb-2">
-            <label>終了日：</label>
-            <input type="date" name="end_date" required class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary">選択肢を追加</button>
+    </div>
+ 
+    <!-- 変更フォーム（最初は非表示、Ajaxでupdate） -->
+    <div id="changeFormWrap" style="display:none; margin-top:12px;">
+        <form id="changeForm" class="row g-2">
+            <input type="hidden" name="vote_id" value="<?php echo $last_vote_id; ?>">
+            <div class="col-12">
+                <input type="text" name="new_title" id="newTitle" class="form-control" placeholder="タイトル" required>
+            </div>
+            <div class="col-6">
+                <input type="date" name="new_start" id="newStart" class="form-control" placeholder="開始日">
+            </div>
+            <div class="col-6">
+                <input type="date" name="new_end" id="newEnd" class="form-control" placeholder="終了日">
+            </div>
+            <div class="col-12">
+                <button type="submit" id="saveChangeBtn" class="btn btn-success btn-sm">保存</button>
+                <button type="button" id="cancelChangeBtn" class="btn btn-secondary btn-sm">キャンセル</button>
+                <span id="changeMsg" class="ms-2"></span>
+            </div>
+        </form>
+    </div>
+ 
+    <hr>
+ 
+    <!-- 選択肢入力フォーム -->
+    <form id="senntaForm" class="mb-2">
+        <input type="hidden" name="title_id" value="<?php echo $last_vote_id; ?>">
+        <input type="text" id="senntaInput" name="senntaku" class="form-control input-small mb-2" placeholder="選択肢" required>
+        <button type="submit" id="senntaAddBtn" class="btn btn-success">追加</button>
+    </form>
+ 
+    <h5>追加した選択肢：</h5>
+    <div id="senntaList"></div>
+ 
+    <hr>
+ 
+    <!-- 投稿ボタン -->
+    <form method="POST">
+        <input type="hidden" name="finish_vote_id" value="<?php echo $last_vote_id; ?>">
+        <button type="submit" class="btn btn-primary w-100">投稿</button>
     </form>
 </div>
-
-<?php if ($last_vote_id): ?>
-<!-- モーダル（選択肢追加） -->
-<div class="modal fade show" id="senntaModal" tabindex="-1" style="display:block;" aria-modal="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">選択肢を追加（投票ID: <?php echo $last_vote_id; ?>）</h5>
-      </div>
-
-      <div class="modal-body">
-
-        <!-- 選択肢入力フォーム -->
-        <form id="senntaForm">
-            <input type="hidden" name="title_id" value="<?php echo $last_vote_id; ?>">
-            <div class="mb-2">
-                <label>選択肢：</label>
-                <input type="text" name="senntaku" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-success">追加</button>
-        </form>
-
-        <div id="senntaResult" class="mt-2"></div>
-
-        <hr>
-
-        <!-- 選択肢一覧 -->
-        <h5>追加した選択肢：</h5>
-        <div id="senntaList">
-            <!-- ここに動的に追加 -->
-        </div>
-
-        <hr>
-
-        <!-- 完了ボタン -->
-        <form method="POST" class="mt-2">
-            <input type="hidden" name="finish_vote_id" value="<?php echo $last_vote_id; ?>">
-            <button type="submit" class="btn btn-primary w-100">完了</button>
-        </form>
-
-      </div>
-    </div>
-  </div>
-</div>
 <?php endif; ?>
-
+ 
+<!-- JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<?php if ($last_vote_id): ?>
-<script>
-/* ----------------------------------------
-   選択肢 最大 5 個制限 + 削除対応
------------------------------------------ */
-const MAX_SENNTAX = 5;
-
-// 個数チェック（追加・削除のたびに呼ぶ）
-function checkSenntaLimit() {
-    const count = $('#senntaList').children().length;
-
-    if (count >= MAX_SENNTAX) {
-        $('input[name="senntaku"]').prop('disabled', true);
-        $('#senntaForm button').prop('disabled', true).addClass('btn-secondary');
-    } else {
-        $('input[name="senntaku"]').prop('disabled', false);
-        $('#senntaForm button').prop('disabled', false).removeClass('btn-secondary');
-    }
-}
-
-// 選択肢追加
-$('#senntaForm').on('submit', function(e){
-    e.preventDefault();
-
-    $.post('add_sennta.php', $(this).serialize(), function(data){
-        $('#senntaResult').html(data);
-
-        const text = $('input[name="senntaku"]').val();
-
-        // 表示追加（削除ボタン付き）
-        $('#senntaList').append(`
-            <div class="alert alert-secondary py-1 mb-1 d-flex justify-content-between align-items-center">
-                ${text}
-                <button class="btn btn-sm btn-danger delete-btn" data-id="${data}">
-                    削除
-                </button>
-            </div>
-        `);
-
-        $('#senntaForm')[0].reset();
-
-        checkSenntaLimit();
-    });
-});
-
-// 削除ボタン（動的要素のため on で処理）
-$('#senntaList').on('click', '.delete-btn', function(){
-    const sennta_id = $(this).data('id');
-    const targetDiv = $(this).closest('.alert');
-
-    $.post('delete_sennta.php', { id: sennta_id }, function(res){
-        if (res.trim() === 'OK') {
-            targetDiv.remove();
-            checkSenntaLimit();
-        }
-    });
-});
-
-// 初期ロード時にチェック
-checkSenntaLimit();
-</script>
-<?php endif; ?>
-
+ 
+<!-- 外部JS -->
+<script src="gamen10.js"></script>
+ 
 </body>
 </html>
+ 
+ 
