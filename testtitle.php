@@ -3,7 +3,7 @@ session_start();
  
 // ログインチェック
 if (!isset($_SESSION['account_number'])) {
-    header("Location: login.php");
+    header("Location: testlogin.php");
     exit();
 }
  
@@ -37,26 +37,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finish_vote_id'])) {
 -----------------------------------------------------*/
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
     $title = $_POST['title'];
- 
-    // 開始/終了日時
-    $start_date = $_POST['start_date'] ?? NULL;
-    $end_date = !empty($_POST['end_date']) ? $_POST['end_date'] : '9999-12-31';
- 
-    $stmt = $conn->prepare(
-        "INSERT INTO votes (title, start_date, end_date, account_id, flag)
-         VALUES (?, ?, ?, ?, 0)"
-    );
-    $stmt->bind_param("ssss", $title, $start_date, $end_date, $account_number);
- 
-    if ($stmt->execute()) {
-        $last_vote_id = $conn->insert_id;
+    $title = isset($_POST['title']) ? trim($_POST['title']) : '';
+    $start_date = isset($_POST['start_date']) ? trim($_POST['start_date']) : '';
+    $end_date = isset($_POST['end_date']) ? trim($_POST['end_date']) : '';
+
+    // 3つすべて必須
+    if (empty($title) || empty($start_date) || empty($end_date)) {
+        $show_error = true;
     } else {
-        echo "<p>保存エラー: " . $stmt->error . "</p>";
+        $stmt = $conn->prepare(
+            "INSERT INTO votes (title, start_date, end_date, account_id, flag)
+            VALUES (?, ?, ?, ?, 0)"
+        );
+        $stmt->bind_param("ssss", $title, $start_date, $end_date, $account_number);
+ 
+        if ($stmt->execute()) {
+            $last_vote_id = $conn->insert_id;
+        } else {
+            echo "<p>保存エラー: " . $stmt->error . "</p>";
+        }
+ 
+        $stmt->close();
     }
- 
-    $stmt->close();
 }
- 
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -80,14 +83,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
     <div class="main-box">
         <h2>タイトル登録</h2>
         <h1>ようこそ <?php echo htmlspecialchars($name); ?> さん</h1>
- 
+
         <!-- タイトル入力フォーム -->
-        <form method="POST" action="">
-            <input type="text" name="title" class="form-control input-small mb-2" placeholder="タイトル" required>
-            <input type="date" name="start_date" class="form-control input-small mb-2" placeholder="開始日">
-            <input type="date" name="end_date" class="form-control input-small mb-2" placeholder="終了日">
-            <button type="submit" class="btn btn-primary mt-2">選択肢を追加</button>
-        </form>
+    <form method="POST" action="">
+        <div class="mb-2">
+            <label>タイトル：</label>
+            <input type="text" name="title" required class="form-control">
+        </div>
+        <div class="mb-2">
+            <label>開始日：</label>
+            <input type="date" name="start_date" required class="form-control">
+        </div>
+        <div class="mb-2">
+            <label>終了日：</label>
+            <input type="date" name="end_date" required class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">選択肢を追加</button>
+    </form>
+ 
     </div>
 </div>
  
