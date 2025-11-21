@@ -36,26 +36,26 @@ $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_
 <head>
 <meta charset="UTF-8">
 <title><?php echo htmlspecialchars($title); ?> に投票</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-4">
+<link rel="stylesheet" href="testtouhyou.css"></head>
+<body>
+  <div class="header">
+    <h2><?php echo htmlspecialchars($title); ?> に投票</h2>
+  </div>
 
-<h2><?php echo htmlspecialchars($title); ?> に投票</h2>
-
-<form action="testkannryo.php" method="POST">
-<input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>">
+  <form action="testkannryo.php" method="POST" class="vote-form">
+    <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>">
 
     <?php while ($row = $result->fetch_assoc()): ?>
-<div class="form-check">
-<input type="radio" name="senntaku_id" value="<?php echo $row['id']; ?>" class="form-check-input" required>
-<label class="form-check-label">
-<?php echo htmlspecialchars($row['senntaku']); ?>
-</label>
-</div>
-<?php endwhile; ?>
+      <div class="form-check">
+        <input type="radio" name="senntaku_id" value="<?php echo $row['id']; ?>" class="form-check-input" required>
+        <label class="form-check-label">
+          <?php echo htmlspecialchars($row['senntaku']); ?>
+        </label>
+      </div>
+    <?php endwhile; ?>
 
     <button type="submit" class="btn btn-success mt-3">投票する</button>
-</form>
-
+  </form>
 </body>
+
 </html>

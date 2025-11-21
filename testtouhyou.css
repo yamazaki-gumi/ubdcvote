@@ -1,0 +1,72 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column; /* 上下に並べる */
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.header h2 {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 40px; /* フォームとの間隔 */
+    text-align: center;
+}
+
+.vote-form {
+    background-color: #fff;
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-check {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.form-check-label {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: block;
+    margin: 0 auto;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white; /* 常に白文字 */
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.3s; /* 背景だけ少し変化させたい場合 */
+}
+
+/* ホバーで文字色を変えないので以下は不要 */
+.btn-success:hover {
+    background-color: #218838; /* 背景色だけ少し濃くなる */
+}
