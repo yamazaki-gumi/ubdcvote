@@ -28,7 +28,7 @@ if ($conn->connect_error) {
     <h1 class="h1">アカウント設定</h1>
     <div class="button-container">
         <button class="btndelete" onclick="location.href='testdeletekakunin.php'">アカウント削除</button>
-        <button class="btnlogout" onclick="location.href='testlogin.php'">ログアウト</button>
+        <button class="btnlogout" onclick="location.href='gamen1.php'">ログアウト</button>
     </div>
     <button class="back-button" onclick="location.href='test_main.php'">戻る</butto>
 </body>

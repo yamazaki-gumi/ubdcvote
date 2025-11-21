@@ -17,17 +17,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo "<p class='error-message' style='color:red;'>※すべて入力してください。</p>";
     } else {
 
+        // ▼ パスワードをハッシュ化
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
         // ▼ DB登録処理
-        $stmt = $conn->prepare("INSERT INTO accounts (account_number, name, class_id, password) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isss", $account_number, $name, $class_id, $password);
+        $stmt = $conn->prepare(
+            "INSERT INTO accounts (account_number, name, class_id, password) VALUES (?, ?, ?, ?)"
+        );
+
+        $stmt->bind_param("isss", $account_number, $name, $class_id, $hashed_password);
 
         if ($stmt->execute()) {
             header("Location: gamen2-1.php");
             exit();
-            // ▼ 必要ならここで画面遷移もできる
-            // header("Location: gamenX.php");
-            // exit();
-
         } else {
             echo "<p class='error-message'>保存エラー: " . $stmt->error . "</p>";
         }
@@ -55,16 +57,17 @@ $conn->close();
     <form id="regForm" action="testtouroku.php" method="POST">
 
         <label>アカウント番号（4桁）：</label>
-        <input type="text" name="account_number"><br>
+        <input type="text" name="account_number" required><br>
 
         <label>名前：</label>
-        <input type="text" name="name"><br>
+        <input type="text" name="name" required><br>
 
         <label>クラス：</label>
-        <input type="text" name="class_id"><br>
+        <input type="text" name="class_id" required><br>
 
         <label>パスワード：</label>
-        <input type="text" name="password"><br>
+        <!-- セキュリティのため password 型に変更 -->
+        <input type="password" name="password" required><br>
 
         <button type="submit" id="submitBtn">登録</button>
     </form>

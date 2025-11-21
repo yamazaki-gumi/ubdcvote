@@ -16,24 +16,32 @@ if ($conn->connect_error) {
 // POST送信時のみ処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // 入力値取得（存在しない場合は空文字）
     $account_number = $_POST['account_number'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // SQL 文
-    $sql = "SELECT name, account_number FROM accounts WHERE account_number = ? AND password = ?";
+    // ✅ パスワードではなく「学籍番号だけ」で検索する
+    $sql = "SELECT name, account_number, password FROM accounts WHERE account_number = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("is", $account_number, $password);
+    $stmt->bind_param("i", $account_number);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
-        // ログイン成功
-        $_SESSION['account_number'] = $row['account_number'];
-        $_SESSION['name'] = $row['name'];
 
-        header("Location: test_main.php");
-        exit();
+        // ✅ ここでハッシュチェック
+        if (password_verify($password, $row['password'])) {
+
+            // ログイン成功
+            $_SESSION['account_number'] = $row['account_number'];
+            $_SESSION['name'] = $row['name'];
+
+            header("Location: test_main.php");
+            exit();
+
+        } else {
+            $error = "学籍番号またはパスワードが間違っています。";
+        }
+
     } else {
         $error = "学籍番号またはパスワードが間違っています。";
     }
@@ -53,7 +61,6 @@ $conn->close();
 </head>
 <body>
 
-
 <?php
 if (!empty($error)) {
     echo "<p style='color:red;'>$error</p>";
@@ -68,6 +75,8 @@ if (!empty($error)) {
         <input type="submit" value="ログイン">
     </form>
 </div>
+
 <button class="back-button" onclick="location.href='gamen1.php'">戻る</button>
+
 </body>
 </html>
