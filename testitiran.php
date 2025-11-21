@@ -35,7 +35,7 @@ $result = $conn->query($sql);
 <meta charset="UTF-8">
 <title>投票一覧</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
- 
+<link rel="stylesheet" href="testitiran.css?v=<?php echo time(); ?>">
 <style>
     /* スクロール可能な大枠 */
     .scroll-box {
@@ -73,7 +73,7 @@ $result = $conn->query($sql);
 </style>
 </head>
 <body class="container mt-4">
- 
+<a href="test_main.php" class="btn btn-secondary return-btn">戻る</a>
 <h2>投票一覧</h2>
  
 <!-- ▼スクロールできる大枠 ▼ -->
