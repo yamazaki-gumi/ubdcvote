@@ -58,7 +58,7 @@ $result = $stmt->get_result();
         font-weight: bold;
     }
  
-　.status-open {
+    .status-open {
         background-color: #28a745; /* 緑 */
         color: #fff;
     }
@@ -101,6 +101,7 @@ $result = $stmt->get_result();
         <?php else: ?>
             <span class="badge status-closed"><?= $status ?></span>
         <?php endif; ?>
+        </div>
     </div>
  
     <!-- 2段目：期間 -->
