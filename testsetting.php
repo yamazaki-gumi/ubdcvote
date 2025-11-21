@@ -1,6 +1,17 @@
 <?php
 session_start();
+// キャッシュ完全無効化
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");
 
+// ---------------------------
+// セッションチェック
+if (!isset($_SESSION['account_number'])) {
+    echo "<script>window.location.href='gamen1.php';</script>";
+    exit();
+}
 if (!isset($_SESSION['account_number'])) {
     header("Location: login.php");
     exit();
@@ -17,7 +28,14 @@ if ($conn->connect_error) {
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-
+<script>
+// bfcache復元対策：戻る・進むでキャッシュから復元された場合に強制リロード
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+</script>
 <!-- Bootstrap（先）-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -28,7 +46,7 @@ if ($conn->connect_error) {
     <h1 class="h1">アカウント設定</h1>
     <div class="button-container">
         <button class="btndelete" onclick="location.href='testdeletekakunin.php'">アカウント削除</button>
-        <button class="btnlogout" onclick="location.href='gamen1.php'">ログアウト</button>
+        <button class="btnlogout" onclick="location.href='tlogout.php'">ログアウト</button>
     </div>
     <button class="back-button" onclick="location.href='test_main.php'">戻る</butto>
 </body>

@@ -1,8 +1,17 @@
 <?php
 session_start();
 
+// ---------------------------
+// キャッシュ完全無効化
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// ---------------------------
+// セッションチェック
 if (!isset($_SESSION['account_number'])) {
-    header("Location: testlogin.php");
+    echo "<script>window.location.href='gamen1.php';</script>";
     exit();
 }
 
@@ -16,8 +25,16 @@ $account_number = $_SESSION['account_number'];
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ホーム</title>
 
+<script>
+// bfcache復元対策：戻る・進むでキャッシュから復元された場合に強制リロード
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+</script>
+
 <style>
-/* ページ全体 */
 html, body {
     height: 100%;
     margin: 0;
@@ -28,26 +45,20 @@ html, body {
     font-family: sans-serif;
     flex-direction: column;
 }
-
-/* タイトル */
 h1 {
     margin-bottom: 30px;
     font-size: 28px;
     text-align: center;
 }
-
-/* ボタンコンテナ */
 .menu-container {
     display: flex;
-    flex-direction: column; /* 縦並び */
+    flex-direction: column;
     gap: 15px;
     width: 250px;
     align-items: center;
 }
-
-/* ボタン */
 .menu-container button {
-    display: block !important; /* 横並び防止のため最優先 */
+    display: block !important;
     width: 100%;
     padding: 12px;
     font-size: 18px;
@@ -58,15 +69,15 @@ h1 {
     cursor: pointer;
     transition: 0.2s;
 }
-
 .menu-container button:hover {
     background-color: #0056b3;
 }
+
 </style>
 </head>
 <body>
 
-<h1>ようこそ <?php echo htmlspecialchars($name); ?> さん</h1>
+<h1>ようこそ <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?> さん</h1>
 
 <div class="menu-container">
     <button onclick="location.href='testtitle.php'">投票作成</button>

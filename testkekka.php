@@ -72,7 +72,7 @@ $result2 = $stmt2->get_result();
     </tbody>
 </table>
 
-<a href="testzumi.php" class="btn btn-secondary mt-3">投票一覧に戻る</a>
+<a href="testjoukyou.php" class="btn btn-secondary mt-3">投票一覧に戻る</a>
 
 </body>
 </html>
