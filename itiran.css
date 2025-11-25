@@ -1,10 +1,29 @@
 th{
     font-size:25px;
 }
-
+ 
 .return-btn {
     position: fixed;
     top: 18px;
     right: 18px;
     z-index: 2000;
 }
+ 
+/* タイトルフォント（rem指定可） */
+.vote-title {
+    font-size: 2rem;
+    font-weight: 700; /* ← 数値指定OK（100～900）*/
+}
+ 
+/* 作成者・期間スタイル */
+.creator-text,
+.vote-period {
+    font-size: 1rem;
+    font-weight: 500; /* ← お好きな数字に変更可能 */
+}
+ 
+/* 作成者と期間の間隔 */
+.gap-3 {
+    gap: 1.2rem; /* 調整可能 */
+}
+ 
