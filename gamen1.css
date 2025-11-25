@@ -11,29 +11,31 @@ body {
   position: absolute;
   top: 60%; /* 中央より下 */
   display: flex;
-  gap: 30px;
+  gap: 90px;
 }
-
+ 
 .btntoukou,
 .btnback12 {
-  padding: 15px 40px;
-  font-size: 20px;
+  padding: 10px 45px;
+  font-size: 30px;
   border: none;
-  border-radius: 8px;
+  border-radius: 13px;
   cursor: pointer;
+ 
 }
-
+ 
 .btntoukou {
-  background-color: #6c757d;
+  background-color: #4FC3F7;
   color: white;
 }
-
+ 
 .btnback12 {
-  background-color: #6c757d;
+  background-color: #4FC3F7;
   color: white;
 }
 h1 {
   text-align: center;
-  margin-top: 100px; /* 上からの余白も調整 */
-  font-size: 55px;
+  margin-top: 200px; /* 上からの余白も調整 */
+  font-size: 85px;
 }
+ 
