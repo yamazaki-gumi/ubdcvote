@@ -92,7 +92,7 @@ if (!empty($error)) {
         <label>パスワード:
             <input type="password" name="password" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
         </label><br>
-        <input type="submit" value="ログイン">
+        <input type="submit" id="submitBtn"value="ログイン">
     </form>
 </div>
 

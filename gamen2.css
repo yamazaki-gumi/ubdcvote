@@ -20,14 +20,15 @@ body {
     top: 20px;
     right: 20px;
     padding: 10px 20px;
-    background-color: #ff0000;
+    background-color: #888;
+    color:#ffffff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
 }
 .back-button:hover {
-    background-color: #bbb;
+    background-color: #555;
 }
 
 /* ===============================
@@ -90,7 +91,7 @@ form input {
 #submitBtn {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50; /* ログインボタンと同じ色 */
+    background-color: #005fcc; /* ログインボタンと同じ色 */
     color: white;
     border: none;
     border-radius: 5px;
@@ -99,5 +100,5 @@ form input {
 }
 
 #submitBtn:hover {
-    background-color: #45a049;
+    background-color: #005fcc;
 }
