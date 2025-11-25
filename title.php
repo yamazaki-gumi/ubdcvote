@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finish_vote_id'])) {
     $stmt->execute();
     $stmt->close();
  
-    header("Location: main.php");
+    header("Location: sakuseikannryo.php");
     exit();
 }
  

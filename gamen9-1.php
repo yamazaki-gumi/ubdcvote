@@ -14,4 +14,4 @@ if (!$vote_id || !$senntaku_id) {
 }
 
 echo "投票が完了しました。<br>";
-echo "<a href='test_main.php'>戻る</a>";
+echo "<a href='main.php'>戻る</a>";

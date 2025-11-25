@@ -1,0 +1,77 @@
+<?php
+session_start();
+
+// ログインチェック
+if (!isset($_SESSION['account_number'])) {
+    die("ログインしてください。");
+}
+
+$account_id = $_SESSION['account_number'];
+
+// DB接続
+$conn = new mysqli("localhost", "root", "", "toukounaiyou_db");
+if ($conn->connect_error) {
+    die("接続失敗: " . $conn->connect_error);
+}
+
+$vote_id = $_POST['vote_id'] ?? null;
+$sennta_id = $_POST['senntaku_id'] ?? null;
+
+if (!$vote_id || !$sennta_id) {
+    die("不正なアクセスです。");
+}
+
+$conn->begin_transaction();
+
+try {
+
+    // vote_count に登録
+    $stmt = $conn->prepare("INSERT INTO vote_count (vote_id, sennta_id, account_id) VALUES (?, ?, ?)");
+    $stmt->bind_param("iis", $vote_id, $sennta_id, $account_id);
+    $stmt->execute();
+    $stmt->close();
+
+    // sennta.vote_count +1
+    $stmt = $conn->prepare("UPDATE sennta SET vote_count = vote_count + 1 WHERE id = ?");
+    $stmt->bind_param("i", $sennta_id);
+    $stmt->execute();
+    $stmt->close();
+
+    $conn->commit();
+
+
+
+} catch (mysqli_sql_exception $e) {
+
+    $conn->rollback();
+
+    // ★ ここが重要：エラーコードは $e->getCode() で検出する！
+    if ($e->getCode() == 1062) {
+        echo "<h2>すでに投票済みです。</h2>";
+        echo "<a href='main.php'>戻る</a>";
+    } else {
+        echo "<h2>エラー:</h2>";
+        echo $e->getMessage();
+    }
+}
+
+$conn->close();
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投票完了</title>
+    <link rel="stylesheet" href="gamen9-1.css">
+</head>
+<body>
+ 
+    <div class="container">
+        <h1>投票が完了しました</h1>
+        <button id="backBtn">戻る</button>
+    </div>
+ 
+    <script src="gamen9-1.js"></script>
+</body>
+</html>
