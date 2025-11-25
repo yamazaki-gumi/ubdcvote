@@ -57,7 +57,10 @@ $conn->close();
     <form id="regForm" action="touroku.php" method="POST">
 
         <label>アカウント番号（4桁）：</label>
-        <input type="text" name="account_number" required><br>
+        <input type="text" name="account_number" 
+        pattern="\d{4}" maxlength="4"
+        title="4桁の数字を入力してください"
+        required><br>
 
         <label>名前：</label>
         <input type="text" name="name" required><br>

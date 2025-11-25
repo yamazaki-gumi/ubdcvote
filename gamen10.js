@@ -45,7 +45,7 @@ $(function () {
                 </div>
             `);
  
-            $('#senntaForm')[0].reset();
+            //$('#senntaForm')[0].reset();
             checkSenntaLimit();
         });
     });
