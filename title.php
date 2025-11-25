@@ -3,7 +3,7 @@ session_start();
 //aaaaa
 // ログインチェック
 if (!isset($_SESSION['account_number'])) {
-    header("Location: testlogin.php");
+    header("Location: login.php");
     exit();
 }
  
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finish_vote_id'])) {
     $stmt->execute();
     $stmt->close();
  
-    header("Location: test_main.php");
+    header("Location: main.php");
     exit();
 }
  
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
 <body>
  
 <!-- 画面右上の戻るボタン（常に表示） -->
-<a href="test_main.php" class="btn btn-secondary return-btn">戻る</a>
+<a href="main.php" class="btn btn-secondary return-btn">戻る</a>
  
 <div class="container-center">
     <div class="main-box">

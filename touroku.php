@@ -54,7 +54,7 @@ $conn->close();
 <div class="form-container">
     <h2>アカウント登録</h2>
 
-    <form id="regForm" action="testtouroku.php" method="POST">
+    <form id="regForm" action="touroku.php" method="POST">
 
         <label>アカウント番号（4桁）：</label>
         <input type="text" name="account_number" required><br>

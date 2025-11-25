@@ -1,41 +1,39 @@
 <?php
 session_start();
  
+// セッション確認
 if (!isset($_SESSION['account_number'])) {
-    header("Location: testlogin.php");
+    header("Location: login.php");
     exit();
 }
  
+$name = $_SESSION['name'];
 $account_number = $_SESSION['account_number'];
  
+// DB接続
 $conn = new mysqli("localhost", "root", "", "toukounaiyou_db");
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
  
-$sql = "
-SELECT
-    v.id,
-    v.title,
-    v.start_date,
-    v.end_date,
-    a.name AS creator_name
-FROM votes v
-LEFT JOIN accounts a
-    ON v.account_id = a.account_number
-WHERE v.flag = 1 AND end_date >= CURDATE()
-ORDER BY v.id DESC
-";
-$result = $conn->query($sql);
+// 終了済みの votes を取得
+$stmt = $conn->prepare("
+    SELECT id, title, start_date, end_date, flag
+    FROM votes
+    WHERE flag = 1 AND end_date < CURDATE()
+    ORDER BY id DESC
+");
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
  
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>投票一覧</title>
+<title>あなたの投票結果</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="testitiran.css?v=<?php echo time(); ?>">
+ <link rel="stylesheet" href="sugi.css?v=<?php echo time(); ?>">
 <style>
     /* スクロール可能な大枠 */
     .scroll-box {
@@ -44,7 +42,7 @@ $result = $conn->query($sql);
         padding-right: 10px;
     }
  
-    /* カードのデザイン */
+    /* カードデザイン */
     .vote-card {
         border: 1px solid #ccc;
         padding: 15px;
@@ -54,7 +52,7 @@ $result = $conn->query($sql);
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
  
-    /* タイトルを大きく */
+    /* タイトル大きめ */
     .vote-title {
         font-size: 1.25rem;
         font-weight: bold;
@@ -69,33 +67,26 @@ $result = $conn->query($sql);
         background-color: #ff9999; /* 薄めの赤 */
         color: #fff;
     }
- 
 </style>
 </head>
-<body class="container mt-4">
-<a href="test_main.php" class="btn btn-secondary return-btn">戻る</a>
-<h2>投票一覧</h2>
  
-<!-- ▼スクロールできる大枠 ▼ -->
+<body class="container mt-4">
+<a href="main.php" class="btn btn-secondary return-btn">戻る</a>
+<h2><?= htmlspecialchars($name) ?> さんの投票結果</h2>
+ 
+<!-- ▼ スクロールできる大枠 ▼ -->
 <div class="scroll-box">
  
 <?php while ($row = $result->fetch_assoc()): ?>
+ 
 <?php
     $vote_id = $row['id'];
- 
-    // 投票済みチェック
-    $check = $conn->prepare("SELECT 1 FROM vote_count WHERE vote_id = ? AND account_id = ?");
-    $check->bind_param("ii", $vote_id, $account_number);
-    $check->execute();
-    $already_voted = $check->get_result()->num_rows > 0;
- 
-    // 状態
     $now = date("Y-m-d");
-    if ($now >= $row['start_date'] && $now <= $row['end_date']) {
-        $status = "集計中";
-    } else {
-        $status = "締め切り";
-    }
+ 
+    // 状態判定
+    $status = ($now >= $row['start_date'] && $now <= $row['end_date'])
+        ? "集計中"
+        : "締め切り";
 ?>
  
 <!-- ▼ 1つの投票カード ▼ -->
@@ -110,8 +101,7 @@ $result = $conn->query($sql);
         <?php else: ?>
             <span class="badge status-closed"><?= $status ?></span>
         <?php endif; ?>
-</div>
- 
+        </div>
     </div>
  
     <!-- 2段目：期間 -->
@@ -119,23 +109,16 @@ $result = $conn->query($sql);
         <?= htmlspecialchars($row['start_date']) ?> ～ <?= htmlspecialchars($row['end_date']) ?>
     </div>
  
-    <!-- 3段目：作成者と操作ボタン -->
+    <!-- 3段目：作成者（表示は任意→ここは作成者不明のため非表示に） -->
     <div class="d-flex justify-content-between align-items-center mt-3">
  
-        <div>作成者：<?= htmlspecialchars($row['creator_name']); ?></div>
+        <div></div> <!-- 空：左右バランス用 -->
  
         <div>
-            <?php if ($already_voted): ?>
-                <form action="testkekka.php" method="GET" style="display:inline;">
-                    <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
-                    <button type="submit" class="btn btn-success btn-lg">結果を見る</button>
-                </form>
-            <?php else: ?>
-                <form action="testtouhyou.php" method="GET" style="display:inline;">
-                    <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
-                    <button type="submit" class="btn btn-primary btn-lg">投票する</button>
-                </form>
-            <?php endif; ?>
+            <a href="testkekka.php?vote_id=<?= $row['id'] ?>"
+               class="btn btn-success btn-lg">
+                結果を見る
+            </a>
         </div>
  
     </div>
@@ -148,6 +131,4 @@ $result = $conn->query($sql);
  
 </body>
 </html>
- 
-<?php $conn->close(); ?>
  

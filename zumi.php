@@ -33,7 +33,7 @@ $result = $stmt->get_result();
 <meta charset="UTF-8">
 <title>あなたの投票状況</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="testzumi.css?v=<?php echo time(); ?>">
+<link rel="stylesheet" href="zumi.css?v=<?php echo time(); ?>">
  
 <style>
     /* スクロール可能な大枠 */
@@ -71,7 +71,7 @@ $result = $stmt->get_result();
 </style>
 </head>
 <body class="container mt-4">
-<a href="test_main.php" class="btn btn-secondary return-btn">戻る</a>
+<a href="main.php" class="btn btn-secondary return-btn">戻る</a>
 <h2><?= htmlspecialchars($_SESSION['name']); ?> さんの投票一覧</h2>
  
 <!-- ▼ スクロールできる大枠 ▼ -->
@@ -119,12 +119,12 @@ $result = $stmt->get_result();
  
         <div>
             <?php if ($already_voted): ?>
-                <form action="testkekka.php" method="GET" style="display:inline;">
+                <form action="kekka.php" method="GET" style="display:inline;">
                     <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
                     <button type="submit" class="btn btn-success btn-sm">結果を見る</button>
                 </form>
             <?php else: ?>
-                <form action="testtouhyou.php" method="GET" style="display:inline;">
+                <form action="touhyou.php" method="GET" style="display:inline;">
                     <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
                     <button type="submit" class="btn btn-primary btn-lg">投票する</button>
                 </form>

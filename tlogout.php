@@ -15,7 +15,7 @@ header("Expires: 0");
 // ---------------------------
 // 履歴置換＋リダイレクト
 echo "<script>
-history.replaceState(null, null, 'testlogin.php');
-window.location.href = 'testlogin.php';
+history.replaceState(null, null, 'login.php');
+window.location.href = 'login.php';
 </script>";
 exit();

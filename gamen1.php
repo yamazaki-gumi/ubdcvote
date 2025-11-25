@@ -26,8 +26,8 @@ if ($conn->connect_error) {
 <body>
     <h1 class="h1">UBDC VOTE</h1>
     <div class="button-container">
-        <button class="btnback12" onclick="location.href='testlogin.php'">ログイン</button>
-        <button class="btntoukou" onclick="location.href='testtouroku.php'">新規登録</button>
+        <button class="btnback12" onclick="location.href='login.php'">ログイン</button>
+        <button class="btntoukou" onclick="location.href='touroku.php'">新規登録</button>
     </div>
 </body>
 </html>

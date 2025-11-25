@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['account_number'] = $row['account_number'];
             $_SESSION['name'] = $row['name'];
 
-            header("Location: test_main.php");
+            header("Location: main.php");
             exit();
 
         } else {

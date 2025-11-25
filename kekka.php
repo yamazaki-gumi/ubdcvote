@@ -2,7 +2,7 @@
 session_start();
  
 if (!isset($_SESSION['account_number'])) {
-    header("Location: test_main.php");
+    header("Location: main.php");
     exit();
 }
  
@@ -102,7 +102,7 @@ $result2 = $stmt2->get_result();
 </div>
  
 <!-- 戻るボタン -->
-<a href="test_main.php" class="btn btn-secondary mt-3">← ホームに戻る</a>
+<a href="main.php" class="btn btn-secondary mt-3">← ホームに戻る</a>
  
 </body>
 </html>

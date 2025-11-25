@@ -29,7 +29,7 @@ if ($stmt->execute()) {
     echo "アカウントを削除しました。3秒後にログインページへ移動します。";
     echo "<script>
             setTimeout(function(){
-                window.location.href = 'testlogin.php';
+                window.location.href = 'login.php';
             }, 3000);
             </script>";
 } else {

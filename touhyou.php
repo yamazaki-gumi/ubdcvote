@@ -36,13 +36,13 @@ $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_
 <head>
 <meta charset="UTF-8">
 <title><?php echo htmlspecialchars($title); ?> に投票</title>
-<link rel="stylesheet" href="testtouhyou.css"></head>
+<link rel="stylesheet" href="touhyou.css"></head>
 <body>
   <div class="header">
     <h2><?php echo htmlspecialchars($title); ?> に投票</h2>
   </div>
 
-  <form action="testkannryo.php" method="POST" class="vote-form">
+  <form action="kannryo.php" method="POST" class="vote-form">
     <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>">
 
     <?php while ($row = $result->fetch_assoc()): ?>

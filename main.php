@@ -80,11 +80,11 @@ h1 {
 <h1>ようこそ <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?> さん</h1>
 
 <div class="menu-container">
-    <button onclick="location.href='testtitle.php'">投票作成</button>
-    <button onclick="location.href='testitiran.php'">投票一覧へ</button>
-    <button onclick="location.href='testzumi.php'">作成した投票</button>
-    <button onclick="location.href='testsugi.php'">投票結果</button>
-    <button onclick="location.href='testsetting.php'">アカウント設定</button>
+    <button onclick="location.href='title.php'">投票作成</button>
+    <button onclick="location.href='itiran.php'">投票一覧へ</button>
+    <button onclick="location.href='zumi.php'">作成した投票</button>
+    <button onclick="location.href='sugi.php'">投票結果</button>
+    <button onclick="location.href='setting.php'">アカウント設定</button>
 </div>
 
 </body>

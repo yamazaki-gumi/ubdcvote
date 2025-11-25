@@ -11,7 +11,7 @@ if (!isset($_SESSION['account_number'])) {
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<link rel="stylesheet" href="testdeletekakunin.css?v=<?php echo time(); ?>">
+<link rel="stylesheet" href="deletekakunin.css?v=<?php echo time(); ?>">
 <meta charset="UTF-8">
 
 </head>
@@ -22,7 +22,7 @@ if (!isset($_SESSION['account_number'])) {
 
 <form action="testdelete.php" method="post">
     <button class="btndelete"type="submit" name="delete" value="1">削除する</button>
-    <button class="btncansel"type="button" onclick="location.href='testsetting.php'">キャンセル</button>
+    <button class="btncansel"type="button" onclick="location.href='setting.php'">キャンセル</button>
 </form>
 
 </body>
