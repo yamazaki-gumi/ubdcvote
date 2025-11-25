@@ -81,7 +81,7 @@ h1 {
 
 <div class="menu-container">
     <button onclick="location.href='title.php'">投票作成</button>
-    <button onclick="location.href='itiran.php'">投票箱一覧</button>
+    <button onclick="location.href='itiran.php'">投稿一覧</button>
     <button onclick="location.href='zumi.php'">あなたが作成した投票</button>
     <button onclick="location.href='sugi.php'">投票結果一覧</button>
     <button onclick="location.href='setting.php'">アカウント設定</button>
