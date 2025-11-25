@@ -130,7 +130,7 @@ $stmt->close();
 <div class="option-box">
     <div class="option-header d-flex justify-content-between align-items-start">
         <div>
-            <h4 id="optionHeaderTitle">選択肢を追加（投票ID: <?php echo $last_vote_id; ?>）</h4>
+            <h4 id="optionHeaderTitle">選択肢を追加</h4>
             <div class="small text-muted" id="voteMeta">
                 タイトル：<span id="displayTitle"><?php echo htmlspecialchars($vote_title); ?></span>
                 &nbsp;&nbsp;|&nbsp;&nbsp;
