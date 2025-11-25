@@ -48,7 +48,7 @@ try {
     // ★ ここが重要：エラーコードは $e->getCode() で検出する！
     if ($e->getCode() == 1062) {
         echo "<h2>すでに投票済みです。</h2>";
-        echo "<a href='test_main.php'>戻る</a>";
+        echo "<a href='main.php'>戻る</a>";
     } else {
         echo "<h2>エラー:</h2>";
         echo $e->getMessage();
@@ -68,7 +68,7 @@ $conn->close();
 <body>
  
     <div class="container">
-        <h1>投稿が完了しました</h1>
+        <h1>投票が完了しました</h1>
         <button id="backBtn">戻る</button>
     </div>
  
