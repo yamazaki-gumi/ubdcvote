@@ -115,7 +115,7 @@ $result = $stmt->get_result();
         <div></div> <!-- 空：左右バランス用 -->
  
         <div>
-            <a href="testkekka.php?vote_id=<?= $row['id'] ?>"
+            <a href="kekka.php?vote_id=<?= $row['id'] ?>"
                class="btn btn-success btn-lg">
                 結果を見る
             </a>

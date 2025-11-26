@@ -16,8 +16,9 @@ if (!isset($_SESSION['account_number'])) {
 
 </head>
 <body>
-<h2 class="h2">アカウント削除</h>
-<h2>⚠ アカウント削除確認</h2>
+<h2 class="h2">⚠ アカウント削除確認</h>
+<br>
+
 <p>本当にアカウントを削除しますか？ この操作は元に戻せません。</p>
 
 <form action="testdelete.php" method="post">
