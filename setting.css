@@ -6,44 +6,48 @@ body {
     justify-content: center;
     align-items: flex-start;
     position: relative;
-    background: #f8f9fa; /* 確認用の背景色 */
+    background: #f8f9fa;
 }
-
+ 
 /* ボタン配置 */
 .button-container {
     position: absolute;
     top: 60%;
     display: flex;
-    gap: 30px;
+    gap: 60px;
 }
-
+ 
 /* ボタン共通 */
-.btndelete,
-.btnlogout {
-    padding: 15px 40px;
-    font-size: 20px;
+.btnlogout,
+.btndelete {
+    width: 230px;       /* ← ボタン幅を固定 */
+    padding: 13px 0;    /* ← 横paddingはなし */
+    font-size: 25px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    text-align: center;
 }
-
+ 
 /* 個別 */
 .btndelete {
-    background-color: #6c757d;
+    background-color: #007bff;
     color: white;
 }
-
+ 
 .btnlogout {
-    background-color: red;
-    color: black;
+    background-color: #007bff;
+    color: white;
 }
+ 
 h1.h1 {
-    font-size: 40px;
+    font-size: 60px;
     color: #333;
     font-weight: bold;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 170px;
 }
+ 
 .back-button {
     position: fixed;
     top: 20px;
@@ -55,6 +59,8 @@ h1.h1 {
     cursor: pointer;
     font-size: 14px;
 }
+ 
 .back-button:hover {
     background-color: #bbb;
 }
+ 

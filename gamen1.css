@@ -6,12 +6,12 @@ body {
   align-items: flex-start;
   position: relative;
 }
-
+ 
 .button-container {
   position: absolute;
   top: 60%; /* 中央より下 */
   display: flex;
-  gap: 90px;
+  gap: 80px;
 }
  
 .btntoukou,
@@ -19,18 +19,18 @@ body {
   padding: 10px 45px;
   font-size: 30px;
   border: none;
-  border-radius: 13px;
+  border-radius: 8px;
   cursor: pointer;
  
 }
  
 .btntoukou {
-  background-color: #4FC3F7;
+  background-color: #007bff;
   color: white;
 }
  
 .btnback12 {
-  background-color: #4FC3F7;
+  background-color: #007bff;
   color: white;
 }
 h1 {
@@ -38,4 +38,3 @@ h1 {
   margin-top: 200px; /* 上からの余白も調整 */
   font-size: 85px;
 }
- 
