@@ -112,7 +112,7 @@ $result = $stmt->get_result();
 <!-- ▼ 1つの投票カード ▼ -->
 <div class="vote-card">
  
- <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between">
         <div class="vote-title"><?= htmlspecialchars($row['title']); ?></div>
         <div>
         <?php if ($status === "集計中"): ?>
@@ -136,10 +136,8 @@ $result = $stmt->get_result();
         <button type="submit" class="btn btn-success btn-lg">結果を見る</button>
     </form>
     </div>
-
- 
-    </div>
 </div>
+
 <!-- ▲ 投票カード ▲ -->
  
 <?php endwhile; ?>
