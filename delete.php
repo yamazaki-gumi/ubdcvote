@@ -16,22 +16,20 @@ if ($conn->connect_error) {
 }
 
 // 削除SQL
-$sql = "DELETE FROM accounts WHERE account_number = ? AND account_number=account_id";
+$sql = "DELETE FROM accounts WHERE account_number = ?";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $account_number);
+$stmt->bind_param("s", $account_number);  // account_number が文字列なら s
 
 if ($stmt->execute()) {
     // セッション破棄
     session_unset();
     session_destroy();
-
-    echo "アカウントを削除しました。3秒後にログインページへ移動します。";
     echo "<script>
             setTimeout(function(){
                 window.location.href = 'login.php';
-            }, 3000);
-            </script>";
+            });
+          </script>";
 } else {
     echo "削除に失敗しました: " . $conn->error;
 }

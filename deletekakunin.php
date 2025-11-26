@@ -21,7 +21,7 @@ if (!isset($_SESSION['account_number'])) {
 
 <p>本当にアカウントを削除しますか？ この操作は元に戻せません。</p>
 
-<form action="testdelete.php" method="post">
+<form action="delete.php" method="post">
     <button class="btndelete"type="submit" name="delete" value="1">削除する</button>
     <button class="btncansel"type="button" onclick="location.href='setting.php'">キャンセル</button>
 </form>
