@@ -1,0 +1,30 @@
+/* 全体を縦横中央ぞろえ */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;
+    font-family: sans-serif;
+}
+ 
+.container {
+    text-align: center;
+}
+ 
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #3b82f6;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+ 
+button:hover {
+    background-color: #2563eb;
+}
