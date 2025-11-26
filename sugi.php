@@ -35,14 +35,14 @@ $result = $stmt->get_result();
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
  <link rel="stylesheet" href="sugi.css?v=<?php echo time(); ?>">
 <style>
-    /* スクロール可能な大枠 */
+   /* スクロールできる領域 */
     .scroll-box {
         max-height: 70vh;
         overflow-y: auto;
         padding-right: 10px;
     }
  
-    /* カードデザイン */
+    /* カード装飾 */
     .vote-card {
         border: 1px solid #ccc;
         padding: 15px;
@@ -52,21 +52,41 @@ $result = $stmt->get_result();
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
  
-    /* タイトル大きめ */
+    /* ▼変更済み：フォント数字指定可能 */
     .vote-title {
-        font-size: 1.25rem;
-        font-weight: bold;
+        font-size: 2.5rem;
+        font-weight: 900;
+        position: relative;
+        top: -12px;
+        left: 5px;
+    }
+ 
+    .creator-text,
+    .vote-period {
+        font-size: 1.4rem;
+        font-weight: 500; /* ←変更自由 */
+        position: relative;
+        top: 70px;
+        left: 10px;
     }
  
     .status-open {
-        background-color: #28a745; /* 緑 */
+        background-color: #28a745;
         color: #fff;
     }
  
     .status-closed {
-        background-color: #ff9999; /* 薄めの赤 */
+        background-color: #ff9999;
         color: #fff;
     }
+ 
+    /* 作成者と期間の横幅余白 */
+    .info-area {
+        display: flex;
+        gap: 30px; /* ←調整可能 */
+        align-items: center;
+    }
+
 </style>
 </head>
  
@@ -92,8 +112,7 @@ $result = $stmt->get_result();
 <!-- ▼ 1つの投票カード ▼ -->
 <div class="vote-card">
  
-    <!-- 1段目：タイトル・状態 -->
-    <div class="d-flex justify-content-between">
+ <div class="d-flex justify-content-between">
         <div class="vote-title"><?= htmlspecialchars($row['title']); ?></div>
         <div>
         <?php if ($status === "集計中"): ?>
@@ -104,22 +123,20 @@ $result = $stmt->get_result();
         </div>
     </div>
  
-    <!-- 2段目：期間 -->
-    <div class="mt-2 text-muted">
-        <?= htmlspecialchars($row['start_date']) ?> ～ <?= htmlspecialchars($row['end_date']) ?>
+    <!-- 作成者 + 期間 → 横並び変更済み -->
+    <div class="info-area mt-2 text-muted">
+        <div class="vote-period">投票期間：<?= htmlspecialchars($row['start_date']) ?> ～ <?= htmlspecialchars($row['end_date']) ?></div>
     </div>
  
-    <!-- 3段目：作成者（表示は任意→ここは作成者不明のため非表示に） -->
-    <div class="d-flex justify-content-between align-items-center mt-3">
- 
-        <div></div> <!-- 空：左右バランス用 -->
- 
-        <div>
-            <a href="kekka.php?vote_id=<?= $row['id'] ?>"
-               class="btn btn-success btn-lg">
-                結果を見る
-            </a>
-        </div>
+    <!-- 操作用ボタン -->
+    <div class="d-flex justify-content-end align-items-center mt-3">
+
+    <form action="kekka.php" method="GET" style="display:inline;">
+        <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
+        <button type="submit" class="btn btn-success btn-lg">結果を見る</button>
+    </form>
+    </div>
+
  
     </div>
 </div>
@@ -131,4 +148,3 @@ $result = $stmt->get_result();
  
 </body>
 </html>
- 
