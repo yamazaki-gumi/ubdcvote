@@ -4,34 +4,43 @@ if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
 
+$error_msg = "";  // ← ★ ここにエラーメッセージを入れる
+
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // ▼ 入力値の取得
     $account_number = trim($_POST['account_number']);
     $name = trim($_POST['name']);
     $class_id = trim($_POST['class_id']);
     $password = trim($_POST['password']);
 
-    // ▼ 未入力チェック
     if ($account_number === "" || $name === "" || $class_id === "" || $password === "") {
-        echo "<p class='error-message' style='color:red;'>※すべて入力してください。</p>";
+
+        $error_msg = "※すべて入力してください。";
+
     } else {
 
-        // ▼ パスワードをハッシュ化
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // ▼ DB登録処理
         $stmt = $conn->prepare(
-            "INSERT INTO accounts (account_number, name, class_id, password) VALUES (?, ?, ?, ?)"
+            "INSERT INTO accounts (account_number, name, class_id, password)
+             VALUES (?, ?, ?, ?)"
         );
-
         $stmt->bind_param("isss", $account_number, $name, $class_id, $hashed_password);
 
-        if ($stmt->execute()) {
+        try {
+            $stmt->execute();
             header("Location: gamen2-1.php");
             exit();
-        } else {
-            echo "<p class='error-message'>保存エラー: " . $stmt->error . "</p>";
+
+        } catch (mysqli_sql_exception $e) {
+
+            if ($e->getCode() == 1062) {
+                // ★ UNIQUEエラー（アカウント番号が重複）
+                $error_msg = "※このアカウント番号は既に使用されています。";
+            } else {
+                $error_msg = "保存エラー: " . $e->getMessage();
+            }
         }
 
         $stmt->close();
@@ -55,6 +64,10 @@ $conn->close();
     <h2>アカウント登録</h2>
 
     <form id="regForm" action="touroku.php" method="POST">
+        <?php if (!empty($error_msg)): ?>
+        <p style="color:red; margin-top:10px;"><?php echo $error_msg; ?></p>
+        <?php endif; ?>
+
 
         <label>アカウント番号（4桁）：</label>
         <input type="text" name="account_number" 
