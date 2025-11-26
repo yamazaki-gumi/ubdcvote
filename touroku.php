@@ -1,11 +1,14 @@
 <?php
+session_start();
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 $conn = new mysqli("localhost", "root", "", "toukounaiyou_db");
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
 
-$error_msg = "";  // ← ★ ここにエラーメッセージを入れる
-
+$error_msg = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -13,30 +16,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = trim($_POST['name']);
     $class_id = trim($_POST['class_id']);
     $password = trim($_POST['password']);
-    $secret = trim($_POST['secret']);
 
-    // ▼ 未入力チェック
-    if ($account_number === "" || $name === "" || $class_id === "" || $password === "" ||$secret === "") {
-        echo "<p class='error-message' style='color:red;'>※すべて入力してください。</p>";
-    } else {
+    if ($account_number === "" || $name === "" || $class_id === "" || $password === "") {
+        $error_msg = "すべて入力してください";
+    } 
+    else {
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         $stmt = $conn->prepare(
-            "INSERT INTO accounts (account_number, name, class_id, password, secret)
-            VALUES (?, ?, ?, ?, ?)"
+            "INSERT INTO accounts (account_number, name, class_id, password)
+             VALUES (?, ?, ?, ?)"
         );
-        $stmt->bind_param("issss", $account_number, $name, $class_id, $hashed_password,$secret);
+        $stmt->bind_param("isss", $account_number, $name, $class_id, $hashed_password);
 
         try {
             $stmt->execute();
-            header("Location: gamen2-1.php");
+
+            // ✅ セッションに直接代入
+            $_SESSION['account_number'] = $account_number;
+            $_SESSION['name'] = $name;
+
+            header("Location: secret_touroku.php");
             exit();
 
         } catch (mysqli_sql_exception $e) {
 
             if ($e->getCode() == 1062) {
-                // ★ UNIQUEエラー（アカウント番号が重複）
                 $error_msg = "※このアカウント番号は既に使用されています。";
             } else {
                 $error_msg = "保存エラー: " . $e->getMessage();
@@ -49,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -85,9 +92,6 @@ $conn->close();
         <!-- セキュリティのため password 型に変更 -->
         <input type="password" name="password" required><br>
 
-        <label>秘密の質問：</label>
-        <input type="secret" name="secret" required><br>
-        
         <button type="submit" id="submitBtn">登録</button>
     </form>
 </div>

@@ -108,6 +108,8 @@ $conn->close();
             <input type="password" name="password" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
         </label><br>
         <input type="submit" id="submitBtn"value="ログイン">
+        <p><a href="request_secret.php">パスワードを忘れましたか？</a></p>
+
     </form>
 </div>
 
