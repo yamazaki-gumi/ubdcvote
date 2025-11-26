@@ -30,7 +30,21 @@ body {
 .back-button:hover {
     background-color: #555;
 }
-
+.modoru-button {
+    width: 150px;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #005fcc;
+    color:#ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.modoru-button:hover {
+    background-color: #555;
+}
 /* ===============================
    登録フォームの中央ボックス
 ================================= */

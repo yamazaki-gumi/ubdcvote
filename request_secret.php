@@ -1,10 +1,8 @@
 <?php
-session_start(); // セッション開始
+session_start();
 
-// ---------------------------
 // キャッシュ無効化
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 header("Expires: 0");
 
@@ -22,35 +20,39 @@ if ($conn->connect_error) {
 
 $error = '';
 
-// POST送信時のみ処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $account_number = $_POST['account_number'] ?? '';
-    $password = $_POST['password'] ?? '';
+    $secret = $_POST['secret'] ?? '';
 
-    $sql = "SELECT name, account_number, password FROM accounts WHERE account_number = ?";
+    $sql = "SELECT name, account_number, secret FROM accounts WHERE account_number = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $account_number);
+
+    if (!$stmt) {
+        die("SQL準備失敗: " . $conn->error);
+    }
+
+    $stmt->bind_param("s", $account_number);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
 
-        if (password_verify($password, $row['password'])) {
+        // ✅ 秘密の質問の答えをチェック
+        if ($secret === $row['secret']) {
 
-            // ログイン成功
             $_SESSION['account_number'] = $row['account_number'];
             $_SESSION['name'] = $row['name'];
 
-            header("Location: main.php");
+            header("Location: hennkou.php");
             exit();
 
         } else {
-            $error = "学籍番号またはパスワードが間違っています。";
+            $error = "学籍番号または秘密の質問が間違っています。";
         }
 
     } else {
-        $error = "学籍番号またはパスワードが間違っています。";
+        $error = "学籍番号または秘密の質問が間違っています。";
     }
 
     $stmt->close();
@@ -63,10 +65,9 @@ $conn->close();
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ログイン</title>
+    <title>パスワードリセット確認</title>
     <link rel="stylesheet" href="gamen2.css">
 
-    <!-- bfcache・フォーム入力残り防止 -->
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -80,27 +81,28 @@ if (!empty($error)) {
 ?>
 
 <div class="form-container">
-    <h1>ログイン</h1>
+    <h1>パスワードを変更</h1>
+
     <form method="POST" action="" autocomplete="off">
-        <!-- 自動入力吸収用ダミー -->
+
         <input type="text" style="display:none">
         <input type="password" style="display:none">
 
-        <label>学籍番号:
-            <input type="text" name="account_number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+        <label>学籍番号
+            <input type="text" name="account_number" required>
         </label><br>
-        <label>パスワード:
-            <input type="password" name="password" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
+
+        <label>秘密の質問を入力してください
+            <input type="text" name="secret" required>
         </label><br>
-        <input type="submit" id="submitBtn"value="ログイン">
-        <p><a href="request_secret.php">パスワードを忘れた方はこちら</a></p>
+
+        <input type="submit" id="submitBtn" value="確認">
     </form>
 </div>
 
 <button class="back-button" onclick="location.href='gamen1.php'">戻る</button>
 
 <script>
-// bfcache復元時のフォームリセット
 window.addEventListener("pageshow", function(event) {
     const forms = document.querySelectorAll('form');
     forms.forEach(form => form.reset());

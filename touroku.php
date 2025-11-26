@@ -13,20 +13,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = trim($_POST['name']);
     $class_id = trim($_POST['class_id']);
     $password = trim($_POST['password']);
+    $secret = trim($_POST['secret']);
 
-    if ($account_number === "" || $name === "" || $class_id === "" || $password === "") {
-
-        $error_msg = "※すべて入力してください。";
-
+    // ▼ 未入力チェック
+    if ($account_number === "" || $name === "" || $class_id === "" || $password === "" ||$secret === "") {
+        echo "<p class='error-message' style='color:red;'>※すべて入力してください。</p>";
     } else {
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         $stmt = $conn->prepare(
-            "INSERT INTO accounts (account_number, name, class_id, password)
-             VALUES (?, ?, ?, ?)"
+            "INSERT INTO accounts (account_number, name, class_id, password, secret)
+            VALUES (?, ?, ?, ?, ?)"
         );
-        $stmt->bind_param("isss", $account_number, $name, $class_id, $hashed_password);
+        $stmt->bind_param("issss", $account_number, $name, $class_id, $hashed_password,$secret);
 
         try {
             $stmt->execute();
@@ -85,6 +85,9 @@ $conn->close();
         <!-- セキュリティのため password 型に変更 -->
         <input type="password" name="password" required><br>
 
+        <label>秘密の質問：</label>
+        <input type="secret" name="secret" required><br>
+        
         <button type="submit" id="submitBtn">登録</button>
     </form>
 </div>
