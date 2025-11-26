@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
     } else {
-        $error = "学籍番号またはパスワードが間違っています。";
+        $error = "学籍番号とパスワードを入力してください";
     }
 
     $stmt->close();
@@ -70,14 +70,29 @@ $conn->close();
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <style>
+    /* 画面上部に固定表示するエラー */
+        .error-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            color: #ff0000;
+            text-align: center;
+            font-weight: bold;
+            padding: 10px 0;
+        }
+        /* フォームがエラーに隠れないように少し余白 */
+        body {
+            padding-top: 30px; /* error-boxの高さに合わせて調整 */
+        }
+    </style>
 </head>
 <body>
 
-<?php
-if (!empty($error)) {
-    echo "<p style='color:red;'>$error</p>";
-}
-?>
+<?php if (!empty($error)): ?>
+    <div class="error-box"><?= htmlspecialchars($error) ?></div>
+<?php endif; ?>
 
 <div class="form-container">
     <h1>ログイン</h1>
@@ -93,7 +108,6 @@ if (!empty($error)) {
             <input type="password" name="password" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
         </label><br>
         <input type="submit" id="submitBtn"value="ログイン">
-        <p><a href="request_secret.php">パスワードを忘れた方はこちら</a></p>
     </form>
 </div>
 

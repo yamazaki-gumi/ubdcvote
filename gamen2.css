@@ -116,3 +116,12 @@ form input {
 #submitBtn:hover {
     background-color: #005fcc;
 }
+
+.error-box {
+    width: 100%;           /* 横幅いっぱい */
+    max-width: 400px;      /* フォーム幅に合わせる */
+    text-align: center;    /* 中央寄せ */
+    color: red;            /* 赤文字 */
+    font-weight: bold;
+    margin-bottom: 15px;   /* フォームとの間隔 */
+}
