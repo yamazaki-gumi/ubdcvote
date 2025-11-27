@@ -1,20 +1,27 @@
 /* ------------ 全体レイアウト ------------ */
-body {
+html, body { /* 変更: htmlもflexで高さ100% */
     font-family: "Segoe UI", sans-serif;
     background-color: #f5f5f5;
     margin: 0;
     padding: 0;
+    display: flex;                /* 変更 */
+    justify-content: center;      /* 変更 */
+    align-items: center;          /* 変更 */
+    flex-direction: column;       /* 変更 */
+    min-height: 100vh;            /* 変更: スマホでも高さ100% */
 }
- 
+
 /* ------------ 中央コンテナ ------------ */
 .form-container {
-    width: 350px;
-    margin: 60px auto;
+    width: 90%;                   /* 変更: 画面幅に合わせて可変 */
+    max-width: 350px;             /* 変更: 最大幅固定 */
+    margin: 20px auto;            /* 変更: 上下マージン微調整 */
     padding: 30px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     text-align: center;
+    box-sizing: border-box;       /* 変更: 幅計算にパディング込み */
 }
  
 h2 {
@@ -23,12 +30,14 @@ h2 {
  
 /* ------------ 入力欄 ------------ */
 form input {
-    width: 90%;
+    width: 100%;                  /* 変更: 親幅いっぱい */
     padding: 8px;
+    margin-top: 5px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 15px;
+    box-sizing: border-box;
 }
  
 /* ------------ 保存メッセージ ------------ */
@@ -61,7 +70,7 @@ form input {
  
 /* ------------ 戻るボタン（右上） ------------ */
 .back-button {
-    position: absolute;
+    position: fixed;              /* 変更: fixedにしてスクロールしても右上固定 */
     top: 20px;
     right: 20px;
     padding: 10px 20px;
@@ -74,4 +83,19 @@ form input {
 }
 .back-button:hover {
     background-color: #555;
+}
+
+/* ------------ レスポンシブ微調整 ------------ */
+@media screen and (max-width: 400px) {
+    .back-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    #submitBtn {
+        font-size: 16px;
+        padding: 8px;
+    }
+    h2 {
+        font-size: 20px;
+    }
 }

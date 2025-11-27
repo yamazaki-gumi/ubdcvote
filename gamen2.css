@@ -1,7 +1,7 @@
 /* ===============================
    全体（中央寄せレイアウト）
 ================================= */
-body {
+html, body {
     margin: 0;
     padding: 0;
     font-family: "Segoe UI", sans-serif;
@@ -9,42 +9,35 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    flex-direction: column;  /* 子要素を縦並びに */
+    min-height: 100vh;       /* スマホでも高さ100% */
 }
 
 /* ===============================
    戻るボタン（右上固定）
 ================================= */
-.back-button {
+.back-button,
+.modoru-button {
     position: fixed;
     top: 20px;
     right: 20px;
     padding: 10px 20px;
-    background-color: #888;
-    color:#ffffff;
+    background-color:#888;
+    color: #ffffff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 14px;
+    transition: 0.2s;
 }
+
 .back-button:hover {
     background-color: #555;
 }
-.modoru-button {
-    width: 150px;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    background-color: #005fcc;
-    color:#ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 18px;
-}
+
 .modoru-button:hover {
     background-color: #555;
 }
+
 /* ===============================
    登録フォームの中央ボックス
 ================================= */
@@ -54,19 +47,15 @@ body {
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
     text-align: center;
-    width: 320px;
+    width: 90%;           /* 画面幅に合わせて可変 */
+    max-width: 350px;     /* 最大幅 */
+    box-sizing: border-box; /* パディング込みで幅計算 */
+    margin: 20px auto;    /* 上下マージン */
 }
 
-.form-container {
-    width: 350px;
-    margin: 60px auto;
-    padding: 30px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
+/* ===============================
+   タイトル
+================================= */
 h2 {
     margin-bottom: 20px;
 }
@@ -75,53 +64,70 @@ h2 {
    入力欄
 ================================= */
 form input {
-    width: 90%;
+    width: 100%;            /* 親幅に合わせる */
     padding: 10px;
     margin-top: 5px;
     margin-bottom: 20px;
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 15px;
+    box-sizing: border-box;
 }
 
 /* ===============================
-   保存メッセージ
+   保存・エラーメッセージ
 ================================= */
-.success-message {
+.success-message,
+.error-message {
     text-align: center;
-    color: green;
     font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    color: green;
 }
 
 .error-message {
-    text-align: center;
     color: red;
-    font-weight: bold;
 }
 
 /* ===============================
    登録ボタン
 ================================= */
 #submitBtn {
+    background-color: #0078ff;
+    color: white;
     width: 100%;
     padding: 10px;
-    background-color: #005fcc; /* ログインボタンと同じ色 */
-    color: white;
-    border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 17px;
-}
-
-#submitBtn:hover {
-    background-color: #005fcc;
+    border: none;
 }
 
 .error-box {
-    width: 100%;           /* 横幅いっぱい */
-    max-width: 400px;      /* フォーム幅に合わせる */
-    text-align: center;    /* 中央寄せ */
-    color: red;            /* 赤文字 */
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    color: red;
     font-weight: bold;
-    margin-bottom: 15px;   /* フォームとの間隔 */
+    margin-bottom: 15px;
+}
+
+/* ===============================
+   レスポンシブ微調整
+================================= */
+@media screen and (max-width: 400px) {
+    .back-button, .modoru-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    #submitBtn {
+        font-size: 16px;
+        padding: 8px;
+    }
+    h2 {
+        font-size: 20px;
+    }
 }

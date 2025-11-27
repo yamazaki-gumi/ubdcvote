@@ -64,7 +64,7 @@ $conn->close();
 <button class="back-button" onclick="location.href='gamen1.php'">戻る</button>
 
 <div class="form-container">
-    <h2>アカウント登録</h2>
+    <h2>秘密の質問内容</h2>
 
     <form id="regForm" action="secret_touroku.php" method="POST">
         <?php if (!empty($error_msg)): ?>
@@ -72,11 +72,11 @@ $conn->close();
         <?php endif; ?>
 
 
-        <label>内容：</label>
+        <label>質問内容</label>
         <input type="text" name="secret_situmon" 
         required><br>
 
-        <label>答え：</label>
+        <label>解答</label>
         <input type="text" name="secret" required><br>
         <button type="submit" id="submitBtn">登録</button>
     </form>
