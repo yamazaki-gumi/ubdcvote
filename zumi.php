@@ -123,8 +123,10 @@ $result = $stmt->get_result();
     $now = date("Y-m-d");
     if ($now >= $row['start_date'] && $now <= $row['end_date']) {
         $status = "集計中";
-    } else {
+    } else if ($now >= $row['start_date'] && $now >=['end_date']){
         $status = "締め切り";
+    } else {
+        $status = "開始前";
     }
 ?>
  

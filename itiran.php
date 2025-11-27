@@ -23,7 +23,7 @@ SELECT
 FROM votes v
 LEFT JOIN accounts a
     ON v.account_id = a.account_number
-WHERE v.flag = 1 AND end_date >= CURDATE()
+WHERE v.flag = 1 AND CURDATE() BETWEEN start_date AND end_date
 ORDER BY v.id DESC
 ";
 $result = $conn->query($sql);

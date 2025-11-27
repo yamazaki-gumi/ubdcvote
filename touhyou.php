@@ -15,21 +15,49 @@ $conn = new mysqli($servername, $username, $dbpassword, $dbname);
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
+
 $vote_id = $_GET['vote_id'] ?? null;
 if (!$vote_id) {
     die("不正なアクセスです。");
 }
 
-// 対応するタイトルと選択肢を取得
-$stmt = $conn->prepare("SELECT title FROM votes WHERE id = ?");
+/* ---------------------------
+   ① タイトル + 期限を取得する
+   ---------------------------*/
+$stmt = $conn->prepare("
+    SELECT title, start_date, end_date
+    FROM votes
+    WHERE id = ?
+");
 $stmt->bind_param("i", $vote_id);
 $stmt->execute();
-$stmt->bind_result($title);
+$stmt->bind_result($title, $start_date, $end_date);
 $stmt->fetch();
 $stmt->close();
 
+/* ---------------------------
+   ② 期限チェック（★ここが重要★）
+   ---------------------------*/
+if (!$title) {
+    die("この投票は存在しません。");
+}
+
+$now = date("Y-m-d H:i:s");
+
+if ($now < $start_date) {
+    die("この投票はまだ開始されていません。");
+}
+
+if ($now > $end_date) {
+    die("この投票は終了しています。");
+}
+
+/* ---------------------------
+   ③ 選択肢を取得（ここから元の処理）
+   ---------------------------*/
 $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_id = $vote_id");
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">

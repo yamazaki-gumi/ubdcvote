@@ -20,7 +20,7 @@ if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
 
-$error = '';
+$error_msg = "";
 
 // POST送信時のみ処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -34,27 +34,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    try {
+
     if ($row = $result->fetch_assoc()) {
 
         if (password_verify($password, $row['password'])) {
-
-            // ログイン成功
             $_SESSION['account_number'] = $row['account_number'];
             $_SESSION['name'] = $row['name'];
 
             header("Location: main.php");
             exit();
-
         } else {
-            $error = "学籍番号またはパスワードが間違っています。";
+            $error_msg = "※パスワードが間違っています。";
         }
 
     } else {
-        $error = "学籍番号とパスワードを入力してください";
+        $error_msg = "※該当するアカウントがありません。";
     }
 
-    $stmt->close();
+} catch (mysqli_sql_exception $e) {
+    $error_msg = "エラーが発生しました: " . $e->getMessage();
 }
+
+    }
+
 
 $conn->close();
 ?>
@@ -97,6 +100,10 @@ $conn->close();
 <div class="form-container">
     <h1>ログイン</h1>
     <form method="POST" action="" autocomplete="off">
+        <?php if (!empty($error_msg)): ?>
+        <p style="color:red; margin-top:10px;"><?php echo $error_msg; ?></p>
+        <?php endif; ?>
+
         <!-- 自動入力吸収用ダミー -->
         <input type="text" style="display:none">
         <input type="password" style="display:none">
