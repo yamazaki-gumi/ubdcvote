@@ -1,68 +1,82 @@
 /* style.css */
- 
-body {
+
+/* ------------ 全体レイアウト ------------ */
+html, body {
     background: #f7f7f7;
     font-family: "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
-}
- 
-/* container center */
-.container-center {
-    width: 100%;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
 }
- 
-/* main box */
+
+/* ------------ container center ------------ */
+.container-center {
+    width: 350px;           /* 元の固定サイズに戻す */
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    box-sizing: border-box;
+}
+
+/* ------------ main box ------------ */
 .main-box {
-    width: 480px;
+    width: 480px;           /* 元の固定サイズに戻す */
     background: #fff;
     padding: 24px;
     border-radius: 10px;
     margin-top: 40px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     text-align: center;
+    box-sizing: border-box;
 }
- 
-/* input small used for input widths */
+
+/* ------------ input small used for input widths ------------ */
 .input-small {
-    width: 320px;
+    width: 320px;           /* 元の固定サイズに戻す */
     margin: 6px auto;
+    box-sizing: border-box;
 }
- 
-/* global return button (screen top-right) */
+
+/* ------------ global return button (screen top-right) ------------ */
 .return-btn {
     position: fixed;
     top: 18px;
     right: 18px;
     z-index: 2000;
 }
- 
-/* option box (the former modal area) */
+
+/* ------------ option box (the former modal area) ------------ */
 .option-box {
-    width: 520px;
+    width: 400px;           /* 元の固定サイズに戻す */
     background: #fff;
     padding: 18px;
     border-radius: 10px;
     margin: 18px auto 40px auto;
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    box-sizing: border-box;
 }
- 
-/* header layout inside option box */
+
+/* ------------ header layout inside option box ------------ */
 .option-header h4 {
     margin: 0;
 }
- 
+
 #voteMeta {
     margin-top: 6px;
     font-size: 0.9rem;
 }
- 
-/* change form wrap */
+
+/* ------------ change form wrap ------------ */
 #changeFormWrap .form-control {
     width: 100%;
+    box-sizing: border-box;
 }
- 
-/* sennta list */
+
+/* ------------ sennta list ------------ */
 #senntaList {
     max-height: 200px;
     overflow-y: auto;
@@ -70,8 +84,8 @@ body {
     text-align: left;
     padding-right: 6px; /* for scrollbar */
 }
- 
-/* individual choice item */
+
+/* ------------ individual choice item ------------ */
 .sennta-item {
     background: #f1f1f1;
     padding: 8px 10px;
@@ -81,16 +95,31 @@ body {
     justify-content: space-between;
     align-items: center;
 }
- 
-/* smaller buttons */
+
+/* ------------ smaller buttons ------------ */
 .btn-sm {
     padding: 0.25rem 0.5rem;
     font-size: 0.8rem;
 }
- 
-/* small message */
+
+/* ------------ small message ------------ */
 #changeMsg {
     font-size: 0.9rem;
 }
- 
- 
+
+/* ------------ レスポンシブ微調整 ------------ */
+/* gamen10.css に追加 */
+@media (max-width: 576px) {
+    #senntaForm {
+        display: flex;
+        flex-direction: column; /* 縦並びに変更 */
+        gap: 8px; /* 入力欄とボタンの間隔 */
+        padding: 0 5px; /* 左右に少し余白 */
+    }
+
+    #senntaForm input,
+    #senntaForm button {
+        width: 100%; /* 幅100%に */
+        box-sizing: border-box; /* パディング含めて幅100% */
+    }
+}

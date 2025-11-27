@@ -67,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>タイトル登録</title>
  
 <!-- Bootstrap -->
@@ -132,8 +133,8 @@ $stmt->close();
         <div>
             <h4 id="optionHeaderTitle">選択肢を追加</h4>
             <div class="small text-muted" id="voteMeta">
-                タイトル：<span id="displayTitle"><?php echo htmlspecialchars($vote_title); ?></span>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
+                タイトル：<span id="displayTitle"><?php echo htmlspecialchars($vote_title); ?><br></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 開始日：<span id="displayStart"><?php echo htmlspecialchars($vote_start_date); ?></span>
                 &nbsp;&nbsp;|&nbsp;&nbsp;
                 終了日：<span id="displayEnd"><?php echo htmlspecialchars($vote_end_date); ?></span>
