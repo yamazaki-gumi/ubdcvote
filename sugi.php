@@ -18,9 +18,16 @@ if ($conn->connect_error) {
  
 // 終了済みの votes を取得
 $stmt = $conn->prepare("
-    SELECT id, title, start_date, end_date, flag
-    FROM votes
-    WHERE flag = 1 AND end_date < CURDATE()
+    SELECT
+    v.id,
+    v.title,
+    v.start_date,
+    v.end_date,
+    a.name AS creator_name
+    FROM votes v
+    LEFT JOIN accounts a
+    ON v.account_id = a.account_number
+    WHERE account_id = ? AND flag=1
     ORDER BY id DESC
 ");
 $stmt->execute();
@@ -93,7 +100,7 @@ $result = $stmt->get_result();
     .pc-only {
     display: inline;
     } 
-        @media (max-width: 576px) {
+    @media (max-width: 576px) {
     .vote-title {
     font-size: 1rem;
     font-weight: 400; /* ← 数値指定OK（100～900）*/
