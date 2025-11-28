@@ -30,6 +30,7 @@ $stmt = $conn->prepare("
     WHERE account_id = ? AND flag=1 AND end_date < CURDATE()
     ORDER BY id DESC
 ");
+$stmt->bind_param("i", $account_number);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
