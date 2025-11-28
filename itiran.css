@@ -26,4 +26,23 @@ th{
 .gap-3 {
     gap: 1.2rem; /* 調整可能 */
 }
- 
+.sp-only {
+    display: none;
+}
+@media (max-width: 576px) {
+.sp-only {
+    display: inline;
+}
+.vote-title {
+    font-size: 100px;
+    font-weight: 500; /* ← 数値指定OK（100～900）*/
+}
+.creator-text{
+    font-size: 0.9rem;
+    font-weight: 300; /* ← お好きな数字に変更可能 */
+    }  
+.vote-period {
+    font-size: 50px;
+    font-weight: 300; /* ← お好きな数字に変更可能 */
+}
+}

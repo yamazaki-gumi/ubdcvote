@@ -31,6 +31,7 @@ $result = $stmt->get_result();
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>あなたの投票結果</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
  <link rel="stylesheet" href="sugi.css?v=<?php echo time(); ?>">
@@ -86,6 +87,32 @@ $result = $stmt->get_result();
         gap: 30px; /* ←調整可能 */
         align-items: center;
     }
+    .sp-only {
+    display: none;
+    }
+    .pc-only {
+    display: inline;
+    } 
+        @media (max-width: 576px) {
+    .vote-title {
+    font-size: 1rem;
+    font-weight: 400; /* ← 数値指定OK（100～900）*/
+    }
+    .creator-text{
+    font-size: 0.9rem;
+    font-weight: 400; /* ← お好きな数字に変更可能 */
+    }  
+    .vote-period {
+    font-size: 0.7rem;
+    font-weight: 400; /* ← お好きな数字に変更可能 */
+    } 
+    .sp-only {
+    display: inline;
+    } 
+    .pc-only {
+    display: none;
+    } 
+    }
 
 </style>
 </head>
@@ -124,9 +151,20 @@ $result = $stmt->get_result();
     </div>
  
     <!-- 作成者 + 期間 → 横並び変更済み -->
+    <span class="pc-only">
     <div class="info-area mt-2 text-muted">
-        <div class="vote-period">投票期間：<?= htmlspecialchars($row['start_date']) ?> ～ <?= htmlspecialchars($row['end_date']) ?></div>
+        <div class="creator-text">作成者：<?= htmlspecialchars($row['creator_name']); ?></div>
+        <div class="vote-period">投票期間：<?= htmlspecialchars($row['start_date']) ?> ～ <?= htmlspecialchars($row['end_date']) ?></div>   
     </div>
+    </span>
+    <span class="sp-only"> 
+    <div class="info-area mt-2 text-muted">
+        <div class="creator-text">作成者：<?= htmlspecialchars($row['creator_name']); ?></div>
+    </div>
+    <div class="info-area mt-2 text-muted">
+        <div class="vote-period">投票期間：<?= htmlspecialchars($row['start_date']) ?> ～ <?= htmlspecialchars($row['end_date']) ?></div>   
+    </div>
+    </span>
  
     <!-- 操作用ボタン -->
     <div class="d-flex justify-content-end align-items-center mt-3">
