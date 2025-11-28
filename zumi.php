@@ -79,7 +79,7 @@ $result = $stmt->get_result();
         font-size: 1.4rem;
         font-weight: 500; /* ←変更自由 */
         position: relative;
-        top: 70px;
+        top: 65px;
         left: 10px;
     }
  
@@ -105,18 +105,32 @@ $result = $stmt->get_result();
     .pc-only {
     display: inline;
     } 
+    .deletebtn{
+    width: 160px;
+    }
+    .resultbtn{
+    width: 160px;
+    }
     @media (max-width: 576px) {
-    .vote-title {
+    .creator-text,
+    .vote-period {
+        font-size: 1.4rem;
+        font-weight: 500; /* ←変更自由 */
+        position: relative;
+        top: 55px;
+        left: 10px;
+    }
+        .vote-title {
     font-size: 1rem;
     font-weight: 400; /* ← 数値指定OK（100～900）*/
     }
     .creator-text{
     font-size: 0.9rem;
-    font-weight: 400; /* ← お好きな数字に変更可能 */
+    font-weight: 370; /* ← お好きな数字に変更可能 */
     }  
     .vote-period {
     font-size: 0.7rem;
-    font-weight: 400; /* ← お好きな数字に変更可能 */
+    font-weight: 370; /* ← お好きな数字に変更可能 */
     } 
     .sp-only {
     display: inline;
@@ -124,6 +138,14 @@ $result = $stmt->get_result();
     .pc-only {
     display: none;
     } 
+    .deletebtn{
+    width: 65spx;
+    font-size:0.5rem;
+    }
+    .resultbtn{
+    width: 65px;
+    font-size:0.5rem;
+    }
     }
 </style>
 </head>
@@ -189,22 +211,22 @@ $result = $stmt->get_result();
     </span>
  
     <!-- 操作用ボタン -->
-    <div class="d-flex justify-content-end align-items-center mt-3" style="gap: 7px;">
- 
+    
+    <div class="d-flex justify-content-end align-items-center mt-3" style="gap: 13px;">        
         <?php if ($already_voted): ?>
             <form action="kekka.php" method="GET" style="display:inline;">
                 <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
-                <button type="submit" class="btn btn-success btn-lg">結果を見る</button>
+                <button type="submit" class="btn btn-success resultbtn">結果を見る</button>
             </form>
         <?php else: ?>
             <form action="touhyou.php" method="GET" style="display:inline;">
-                <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
-                <button type="submit" class="btn btn-primary btn-lg">投票する</button>
-            </form>
+                    <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
+                    <button type="submit" class="btn btn-primary resultbtn">投票する</button>
+                </form>
         <?php endif; ?>
         <form action="touhyoudeletekakunin.php" method="GET" style="display:inline;">
             <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
-            <button type="submit" class="btn btn-primary btn-lg" >削除する</button>
+            <button type="submit" class="btn btn-danger deletebtn" >削除する</button>
         </form>
     </div>
  

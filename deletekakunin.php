@@ -13,17 +13,21 @@ if (!isset($_SESSION['account_number'])) {
 <head>
 <link rel="stylesheet" href="deletekakunin.css?v=<?php echo time(); ?>">
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 <body>
 <h2 class="h2">⚠ アカウント削除確認</h>
 <br>
 
-<p>本当にアカウントを削除しますか？ この操作は元に戻せません。</p>
+<p>本当にアカウントを削除しますか？ 
+<br>この操作は元に戻せません。</p>
 
 <form action="delete.php" method="post">
-    <button class="btndelete"type="submit" name="delete" value="1">削除する</button>
-    <button class="btncansel"type="button" onclick="location.href='setting.php'">キャンセル</button>
+    <div class="button-container">
+        <button class="btndelete"type="submit" name="delete" value="1">削除する</button>
+        <button class="btncansel"type="button" onclick="location.href='setting.php'">キャンセル</button>
+    </div>
 </form>
 
 </body>

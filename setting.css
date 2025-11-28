@@ -63,4 +63,33 @@ h1.h1 {
 .back-button:hover {
     background-color: #bbb;
 }
- 
+@media screen and (max-width: 500px){
+.button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: -100px;
+}
+
+.btndelete{
+    width: 250px;
+    padding: 15px;
+    font-size: 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+
+.btnlogout {
+    width: 250px;
+    padding: 15px;
+    font-size: 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+}

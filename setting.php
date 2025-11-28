@@ -28,6 +28,7 @@ if ($conn->connect_error) {
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 // bfcache復元対策：戻る・進むでキャッシュから復元された場合に強制リロード
 window.addEventListener("pageshow", function(event) {
@@ -40,7 +41,7 @@ window.addEventListener("pageshow", function(event) {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- 自分のCSS（後） キャッシュ回避パラメータ付き -->
-<link rel="stylesheet" href="setting.css?ver=20251119">
+<link rel="stylesheet" href="setting.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <h1 class="h1">アカウント設定</h1>

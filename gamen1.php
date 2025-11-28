@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="gamen1.css">
+    <link rel="stylesheet" href="gamen1.css?v=<?php echo time(); ?>">
     <title>UBDC VOTE</title>
 </head>
 <body>
