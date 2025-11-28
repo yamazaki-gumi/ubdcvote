@@ -27,13 +27,13 @@ $stmt = $conn->prepare("
     FROM votes v
     LEFT JOIN accounts a
     ON v.account_id = a.account_number
-    WHERE account_id = ? AND flag=1
+    WHERE account_id = ? AND flag=1 AND end_date < CURDATE()
     ORDER BY id DESC
 ");
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
- 
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
