@@ -139,7 +139,7 @@ $result = $stmt->get_result();
     display: none;
     } 
     .deletebtn{
-    width: 65spx;
+    width: 65px;
     font-size:0.5rem;
     }
     .resultbtn{
@@ -172,7 +172,7 @@ $result = $stmt->get_result();
     $now = date("Y-m-d");
     if ($now >= $row['start_date'] && $now <= $row['end_date']) {
         $status = "集計中";
-    } else if ($now >= $row['start_date'] && $now >=['end_date']){
+    } else if ($now >= $row['start_date'] && $now >=$row['end_date']){
         $status = "締め切り";
     } else {
         $status = "開始前";

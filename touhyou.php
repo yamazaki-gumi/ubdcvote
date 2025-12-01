@@ -20,7 +20,7 @@ $vote_id = $_GET['vote_id'] ?? null;
 if (!$vote_id) {
     die("不正なアクセスです。");
 }
-$sql = "SELECT $accounts FROM $secret_situmon";
+$sql = "SELECT accounts FROM secret_situmon";
 /* ---------------------------
    ① タイトル + 期限を取得する
    ---------------------------*/
