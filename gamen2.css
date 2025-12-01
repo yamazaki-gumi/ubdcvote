@@ -16,8 +16,7 @@ html, body {
 /* ===============================
    戻るボタン（右上固定）
 ================================= */
-.back-button,
-.modoru-button {
+.back-button{
     position: fixed;
     top: 20px;
     right: 20px;
@@ -29,6 +28,18 @@ html, body {
     cursor: pointer;
     transition: 0.2s;
 }
+.modoru-button {
+    background-color: #0078ff;
+    color: #ffffff;
+    width: 100%;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
 
 .back-button:hover {
     background-color: #555;
@@ -105,6 +116,14 @@ form input {
     font-size: 17px;
     border: none;
 }
+.hennkou{
+        background-color: #0078ff;
+        color: #ffffff;
+}
+.hennkou:hover {
+    background-color: #555;
+}
+
 
 .error-box {
     width: 100%;

@@ -20,7 +20,7 @@ $vote_id = $_GET['vote_id'] ?? null;
 if (!$vote_id) {
     die("不正なアクセスです。");
 }
-
+$sql = "SELECT $accounts FROM $secret_situmon";
 /* ---------------------------
    ① タイトル + 期限を取得する
    ---------------------------*/
@@ -63,6 +63,7 @@ $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo htmlspecialchars($title); ?> に投票</title>
 <link rel="stylesheet" href="touhyou.css"></head>
 <body>

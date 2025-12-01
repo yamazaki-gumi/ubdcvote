@@ -52,8 +52,9 @@ $conn->close();
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>パスワード変更</title>
-<link rel="stylesheet" href="gamen2.css">
+<link rel="stylesheet" href="gamen2.css?v=<?php echo time();?>">
 </head>
 <body>
 
@@ -66,7 +67,7 @@ $conn->close();
 
 <?php if ($success): ?>
 <p style="color:green;"><?php echo $success; ?></p>
-<button class="modoru-button"onclick="location.href='login.php'">戻る</button>
+<button class="modoru-button" onclick="location.href='main.php'">戻る</button>
 
 <?php else: ?>
 <form method="POST">
@@ -75,7 +76,7 @@ $conn->close();
     <input type="password" name="new_password" required>
 </label>
 
-<input type="submit" value="変更する">
+<input class=hennkou type="submit" value="変更する">
 
 </form>
 <?php endif; ?>
