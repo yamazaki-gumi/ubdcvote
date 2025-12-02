@@ -13,7 +13,7 @@ html, body { /* 変更: htmlもflexで高さ100% */
 
 /* ------------ 中央コンテナ ------------ */
 .form-container {
-    width: 90%;                   /* 変更: 画面幅に合わせて可変 */
+    width: 100%;                   /* 変更: 画面幅に合わせて可変 */
     max-width: 350px;             /* 変更: 最大幅固定 */
     margin: 20px auto;            /* 変更: 上下マージン微調整 */
     padding: 30px;
