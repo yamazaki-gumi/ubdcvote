@@ -19,7 +19,8 @@ body {
  
 /* ボタン共通 */
 .btnlogout,
-.btndelete {
+.btndelete,
+.btntouroku {
     width: 230px;       /* ← ボタン幅を固定 */
     padding: 13px 0;    /* ← 横paddingはなし */
     font-size: 25px;
@@ -37,6 +38,10 @@ body {
  
 .btnlogout {
     background-color: #007bff;
+    color: white;
+}
+.btntouroku{
+        background-color: #007bff;
     color: white;
 }
  
@@ -83,6 +88,16 @@ h1.h1 {
 }
 
 .btnlogout {
+    width: 250px;
+    padding: 15px;
+    font-size: 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+.btntouroku{
     width: 250px;
     padding: 15px;
     font-size: 22px;

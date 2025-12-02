@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     } else {
-        $error = "学籍番号または秘密の質問が間違っています。";
+        $error = "学籍番号が間違っています。";
     }
 
     $stmt->close();

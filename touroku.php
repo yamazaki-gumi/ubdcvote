@@ -97,6 +97,6 @@ $conn->close();
     </form>
 </div>
 
-<script src="gamen3.js"></script>
+
 </body>
 </html>

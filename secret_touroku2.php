@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         try {
             $stmt->execute();
-            header("Location: gamen2-1.php");
+            header("Location: gamen2-2.php");
             exit();
 
         } catch (mysqli_sql_exception $e) {
@@ -67,7 +67,7 @@ $conn->close();
 <div class="form-container">
     <h2>秘密の質問内容</h2>
 
-    <form id="regForm" action="secret_touroku.php" method="POST">
+    <form id="regForm" action="secret_touroku2.php" method="POST">
         <?php if (!empty($error_msg)): ?>
         <p style="color:red; margin-top:10px;"><?php echo $error_msg; ?></p>
         <?php endif; ?>

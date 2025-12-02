@@ -48,6 +48,7 @@ window.addEventListener("pageshow", function(event) {
     <div class="button-container">
         <button class="btndelete" onclick="location.href='passninsyou.php'">アカウント削除</button>
         <button class="btnlogout" onclick="location.href='tlogout.php'">ログアウト</button>
+        <button class="btntouroku" onclick="location.href='secret_touroku2.php'">秘密の質問登録</button>
     </div>
     <button class="back-button" onclick="location.href='main.php'">戻る</butto>
 </body>
