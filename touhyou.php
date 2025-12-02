@@ -44,14 +44,15 @@ if (!$title) {
 
 $now = date("Y-m-d H:i:s");
 
-if ($now < $start_date) {
-    die("この投票はまだ開始されていません。");
-}
+if (!isset($error_message)) {
+    if ($now < $start_date) {
+        $error_message = "この投票はまだ開始されていません。";
+    }
 
-if ($now > $end_date) {
-    die("この投票は終了しています。");
+    if ($now > $end_date) {
+        $error_message = "この投票は終了しています。";
+    }
 }
-
 /* ---------------------------
    ③ 選択肢を取得（ここから元の処理）
    ---------------------------*/
@@ -65,26 +66,56 @@ $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo htmlspecialchars($title); ?> に投票</title>
-<link rel="stylesheet" href="touhyou.css"></head>
+<link rel="stylesheet" href="touhyou.css?v=<?php echo time(); ?>"></head>
+<style>
+.error-box {
+    background: #ffe5e5;
+    border: 2px solid #ff6b6b;
+    padding: 20px;
+    margin: 30px auto;
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 1.2em;
+    color: #c0392b;
+}
+</style>
 <body>
-  <div class="header">
-    <h2><?php echo htmlspecialchars($title); ?> に投票</h2>
-  </div>
+<?php if (isset($error_message)): ?>
 
-  <form action="kannryo.php" method="POST" class="vote-form">
-    <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>">
+    <!-- ★ CSS を適用したエラーメッセージ ★ -->
+    <div class="error-box">
+        <?php echo htmlspecialchars($error_message); ?>
+    </div>
+    <button class="modoru-button" onclick="location.href='zumi.php'">戻る</button>
 
-    <?php while ($row = $result->fetch_assoc()): ?>
-      <div class="form-check">
-        <input type="radio" name="senntaku_id" value="<?php echo $row['id']; ?>" class="form-check-input" required>
-        <label class="form-check-label">
-          <?php echo htmlspecialchars($row['senntaku']); ?>
-        </label>
-      </div>
-    <?php endwhile; ?>
 
-    <button type="submit" class="btn btn-success mt-3">投票する</button>
-  </form>
+<?php else: ?>
+
+    <div class="header">
+        <h2><?php echo htmlspecialchars($title); ?> に投票</h2>
+    </div>
+
+    <?php
+    $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_id = $vote_id");
+    ?>
+
+    <form action="kannryo.php" method="POST" class="vote-form">
+        <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>">
+
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="form-check">
+                <input type="radio" name="senntaku_id" value="<?php echo $row['id']; ?>" class="form-check-input" required>
+                <label class="form-check-label">
+                <?php echo htmlspecialchars($row['senntaku']); ?>
+                </label>
+            </div>
+        <?php endwhile; ?>
+
+        <button type="submit" class="btn btn-success mt-3">投票する</button>
+    </form>
+
+<?php endif; ?>
+
 </body>
-
 </html>

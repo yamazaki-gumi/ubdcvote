@@ -70,3 +70,29 @@ body {
 .btn-success:hover {
     background-color: #218838; /* 背景色だけ少し濃くなる */
 }
+.error-box {
+    background: #ffe5e5;
+    border: 2px solid #ff6b6b;
+    padding: 20px;
+    margin: 30px auto;
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 1.2em;
+    color: #c0392b;
+}
+.modoru-button {
+    background-color: #888;
+    color: #ffffff;
+    width: 30%;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.modoru-button:hover {
+    background-color: #555;
+}
+
