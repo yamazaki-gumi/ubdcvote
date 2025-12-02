@@ -1,0 +1,53 @@
+body {
+    background-color: #f4f4f4;
+    font-family: "Meiryo", sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+ 
+/* 戻るボタン（右上固定） */
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+ 
+/* 中央ウィンドウ */
+.auth-window {
+    width: 380px;
+    margin: 120px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+ 
+.password-box {
+    width: 80%;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+}
+ 
+.auth-btn {
+    padding: 10px 20px;
+    background-color:#0078ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+ 
+.error {
+    color: red;
+    font-size: 14px;
+}

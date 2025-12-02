@@ -46,7 +46,7 @@ window.addEventListener("pageshow", function(event) {
 <body>
     <h1 class="h1">アカウント設定</h1>
     <div class="button-container">
-        <button class="btndelete" onclick="location.href='deletekakunin.php'">アカウント削除</button>
+        <button class="btndelete" onclick="location.href='passninsyou.php'">アカウント削除</button>
         <button class="btnlogout" onclick="location.href='tlogout.php'">ログアウト</button>
     </div>
     <button class="back-button" onclick="location.href='main.php'">戻る</butto>
