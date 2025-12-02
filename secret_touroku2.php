@@ -59,7 +59,7 @@ $conn->close();
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>秘密の質問登録</title>
-<link rel="stylesheet" href="gamen3.css">
+<link rel="stylesheet" href="gamen3.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
@@ -69,7 +69,7 @@ $conn->close();
     <h2>秘密の質問内容</h2>
 
     <?php if ($already_registered): ?>
-        <p style="color:red;">※すでに秘密の質問は登録済みです   </p>
+        <p style="color:red;">※すでに秘密の質問は登録済みです</p>
         <p style="color:red;">※変更はできません</p>
     <?php else: ?>
         <form id="regForm" method="POST">
@@ -83,7 +83,7 @@ $conn->close();
             <label>回答</label>
             <input type="text" name="secret" value="<?php echo isset($secret) ? htmlspecialchars($secret) : ''; ?>" required><br>
 
-            <button class="submitBtn" type="submit">登録</button>
+            <button  type="submit" id="submitBtn">登録</button>
         </form>
     <?php endif; ?>
 </div>

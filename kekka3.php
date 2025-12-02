@@ -102,7 +102,7 @@ $result2 = $stmt2->get_result();
 </div>
  
 <!-- 戻るボタン -->
-<a href="itiran.php" class="btn btn-secondary mt-3">← 一覧に戻る</a>
+<a href="sugi.php" class="btn btn-secondary mt-3">← 一覧に戻る</a>
  
 </body>
 </html>

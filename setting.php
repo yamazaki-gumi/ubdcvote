@@ -23,6 +23,15 @@ $conn = new mysqli("localhost", "root", "", "toukounaiyou_db");
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
+$stmt = $conn->prepare("SELECT secret_situmon, secret FROM accounts WHERE account_number = ?");
+$stmt->bind_param("i", $account_number);
+$stmt->execute();
+$stmt->bind_result($secret_q, $secret_a);
+$stmt->fetch();
+$stmt->close();
+
+// 警告表示フラグ
+$need_secret_warning = (empty($secret_q) || empty($secret_a));
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -44,6 +53,15 @@ window.addEventListener("pageshow", function(event) {
 <link rel="stylesheet" href="setting.css?v=<?php echo time(); ?>">
 </head>
 <body>
+
+<div class="wrapper">
+    
+    <?php if ($need_secret_warning): ?>
+        <div class="warning-box">
+            ※秘密の質問が未登録です。
+            アカウント保護のため登録してください。
+        </div>
+    <?php endif; ?>
     <h1 class="h1">アカウント設定</h1>
     <div class="button-container">
         <button class="btndelete" onclick="location.href='passninsyou.php'">アカウント削除</button>

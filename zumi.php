@@ -214,7 +214,7 @@ $result = $stmt->get_result();
     
     <div class="d-flex justify-content-end align-items-center mt-3" style="gap: 13px;">        
         <?php if ($already_voted): ?>
-            <form action="kekka.php" method="GET" style="display:inline;">
+            <form action="kekka2.php" method="GET" style="display:inline;">
                 <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
                 <button type="submit" class="btn btn-success resultbtn">結果を見る</button>
             </form>

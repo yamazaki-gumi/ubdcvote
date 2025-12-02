@@ -1,58 +1,73 @@
-/* 基本レイアウト */
+/* ============================
+   基本レイアウト
+============================ */
 body {
     margin: 0;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    position: relative;
     background: #f8f9fa;
 }
- 
-/* ボタン配置 */
-.button-container {
-    position: absolute;
-    top: 60%;
-    display: flex;
-    gap: 60px;
+
+/* 全体を中央寄せでまとめるコンテナ */
+.wrapper {
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
 }
- 
-/* ボタン共通 */
-.btnlogout,
-.btndelete,
-.btntouroku {
-    width: 230px;       /* ← ボタン幅を固定 */
-    padding: 13px 0;    /* ← 横paddingはなし */
-    font-size: 25px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+
+/* ============================
+   警告文
+============================ */
+.warning-box {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 25px;
     text-align: center;
 }
- 
-/* 個別 */
-.btndelete {
-    background-color: #007bff;
-    color: white;
-}
- 
-.btnlogout {
-    background-color: #007bff;
-    color: white;
-}
-.btntouroku{
-        background-color: #007bff;
-    color: white;
-}
- 
+
+/* ============================
+   見出し
+============================ */
 h1.h1 {
     font-size: 60px;
     color: #333;
     font-weight: bold;
+    margin-bottom: 50px;
     text-align: center;
-    margin-top: 170px;
 }
- 
+
+/* ============================
+   ボタン配置
+============================ */
+.button-container {
+    margin-top: 300px;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+}
+
+/* ============================
+   ボタン共通
+============================ */
+.btnlogout,
+.btndelete,
+.btntouroku {
+    width: 250px;
+    padding: 13px 0;
+    font-size: 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+
+/* ============================
+   戻るボタン
+============================ */
 .back-button {
     position: fixed;
     top: 20px;
@@ -64,47 +79,42 @@ h1.h1 {
     cursor: pointer;
     font-size: 14px;
 }
- 
+
 .back-button:hover {
     background-color: #bbb;
 }
-@media screen and (max-width: 500px){
-.button-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: -100px;
-}
 
-.btndelete{
-    width: 250px;
-    padding: 15px;
-    font-size: 22px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-}
+/* ============================
+   スマホ表示（500px以下）
+============================ */
+@media screen and (max-width: 500px) {
 
-.btnlogout {
-    width: 250px;
-    padding: 15px;
-    font-size: 22px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-}
-.btntouroku{
-    width: 250px;
-    padding: 15px;
-    font-size: 22px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-}
+    h1.h1 {
+        font-size: 40px;
+        margin-bottom: 30px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .btnlogout,
+    .btndelete,
+    .btntouroku {
+        width: 250px;
+        padding: 15px;
+        font-size: 22px;
+    }
+
+    .wrapper {
+        margin-top: 30px;
+    }
+
+    .warning-box {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
 }

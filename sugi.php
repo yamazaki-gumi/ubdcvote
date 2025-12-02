@@ -177,7 +177,7 @@ $result = $stmt->get_result();
     <!-- 操作用ボタン -->
     <div class="d-flex justify-content-end align-items-center mt-3">
 
-    <form action="kekka.php" method="GET" style="display:inline;">
+    <form action="kekka3.php" method="GET" style="display:inline;">
         <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
         <button type="submit" class="btn btn-success btn-lg">結果を見る</button>
     </form>
