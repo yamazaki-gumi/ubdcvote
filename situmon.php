@@ -60,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: hennkou.php");
             exit();
         } else {
-            $error = "解答を入力してください。";
+            $error = "回答が間違っています。";
         }
     } else {
-        $error = "解答が間違っています。";
+        $error = "回答を入力してください。";
     }
     $stmt->close();
 }
