@@ -75,22 +75,26 @@ body {
     border: 2px solid #ff6b6b;
     padding: 20px;
     margin: 30px auto;
-    width: 80%;
+    width: 40%;
     text-align: center;
     border-radius: 10px;
-    font-size: 1.2em;
+    font-size: 1.5em;
     color: #c0392b;
+    position: relative;
+    top: 250px;
 }
 .modoru-button {
     background-color: #888;
     color: #ffffff;
-    width: 30%;
+    width: 15%;
     border: none;
     padding: 8px 14px;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 20px;
     cursor: pointer;
     transition: 0.2s;
+    position: relative;
+    top: 300px;
 }
 .modoru-button:hover {
     background-color: #555;

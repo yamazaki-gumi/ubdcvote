@@ -100,6 +100,18 @@ $result = $conn->query($sql);
     .pc-only {
     display: inline;
     } 
+    .touhyouzumi {
+    background-color: #fc5353ff;
+    border: none;
+    padding: 9px 15px;
+    font-size: 1.3em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: block;
+    margin: 0 auto;
+    color: #fff;
+}
     @media (max-width: 576px) {
     .vote-title {
     font-size: 1rem;
@@ -184,9 +196,8 @@ $result = $conn->query($sql);
     <div class="d-flex justify-content-end align-items-center mt-3">
  
         <?php if ($already_voted): ?>
-            <form action="kekka.php" method="GET" style="display:inline;">
-                <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
-                <button type="submit" class="btn btn-success btn-lg">結果を見る</button>
+            <form>
+                <label class="touhyouzumi">投票済み</label>
             </form>
         <?php else: ?>
             <form action="touhyou.php" method="GET" style="display:inline;">

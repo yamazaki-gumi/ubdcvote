@@ -29,6 +29,17 @@ th{
 .sp-only {
     display: none;
 }
+.touhyouzumi {
+    background-color: #28a745;
+    border: none;
+    padding: 11px 21px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: block;
+    margin: 0 auto;
+}
 @media (max-width: 576px) {
 .sp-only {
     display: inline;

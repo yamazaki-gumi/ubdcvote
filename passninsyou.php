@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
         } else {
             // 認証失敗
-            $error_message = "認証に失敗しました";
+            $error_message = "パスワードが間違っています";
         }
     }
 }

@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
     if (empty($title) || empty($start_date) || empty($end_date)) {
         $show_error = true;
     } else if ($end_date < $start_date OR $end_date == $start_date) {
-        echo "<p style='color:red; text-align:center;'>※終了日は開始日以降の日付を入力してください。</p>";
+        echo "<p style='color:red; text-align:center;'>※終了日は開始日翌日以降の日付を入力してください。</p>";
     } else {
         $stmt = $conn->prepare(
             "INSERT INTO votes (title, start_date, end_date, account_id, flag)

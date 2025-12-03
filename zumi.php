@@ -219,7 +219,7 @@ $result = $stmt->get_result();
                 <button type="submit" class="btn btn-success resultbtn">結果を見る</button>
             </form>
         <?php else: ?>
-            <form action="touhyou.php" method="GET" style="display:inline;">
+            <form action="touhyou2.php" method="GET" style="display:inline;">
                     <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
                     <button type="submit" class="btn btn-primary resultbtn">投票する</button>
                 </form>

@@ -77,7 +77,7 @@ $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_
     <div class="error-box">
         <?php echo htmlspecialchars($error_message); ?>
     </div>
-    <button class="modoru-button" onclick="location.href='itiran.php'">戻る</button>
+    <button class="modoru-button" onclick="location.href='zumi.php'">戻る</button>
 
 
 <?php else: ?>
