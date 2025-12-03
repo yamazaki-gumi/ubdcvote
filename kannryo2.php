@@ -1,7 +1,6 @@
 <?php
 session_start();
-$error = false;
-$error_message = "";
+
 // ログインチェック
 if (!isset($_SESSION['account_number'])) {
     die("ログインしてください。");
@@ -48,13 +47,11 @@ try {
 
     // ★ ここが重要：エラーコードは $e->getCode() で検出する！
     if ($e->getCode() == 1062) {
-        $error = true;
-        $error_message = "すでに投票済みです。";
-// ← HTML の二重表示を防ぐため必須
+        echo "<h2>すでに投票済みです。</h2>";
+        echo "<a href='main.php'>戻る</a>";
     } else {
-        $error = true;
-        $error_message = "エラー: " . $e->getMessage();
-        exit;
+        echo "<h2>エラー:</h2>";
+        echo $e->getMessage();
     }
 }
 
@@ -66,23 +63,15 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>投稿完了</title>
-    <link rel="stylesheet" href="gamen9-1.css">
+    <link rel="stylesheet" href="kannryo2.css">
 </head>
 <body>
  
     <div class="container">
-        <?php if ($error): ?>
-            <!-- ★ エラー表示 -->
-            <h1><?php echo htmlspecialchars($error_message); ?></h1>
-            <button id="backBtn">戻る</button>
-
-        <?php else: ?>
-            <!-- ★ 通常の成功表示 -->
-            <h1>投票が完了しました</h1>
-            <button id="backBtn">戻る</button>
-        <?php endif; ?>
+        <h1>投票が完了しました</h1>
+        <button id="backBtn">戻る</button>
     </div>
  
-    <script src="gamen9-1.js"></script>
+    <script src="kannryo2.js"></script>
 </body>
 </html>

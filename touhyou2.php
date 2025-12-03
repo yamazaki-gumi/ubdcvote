@@ -90,7 +90,7 @@ $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_
     $result = $conn->query("SELECT id, senntaku, vote_count FROM sennta WHERE title_id = $vote_id");
     ?>
 
-    <form action="kannryo.php" method="POST" class="vote-form">
+    <form action="kannryo2.php" method="POST" class="vote-form">
         <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>">
 
         <?php while ($row = $result->fetch_assoc()): ?>
