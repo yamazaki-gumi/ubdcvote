@@ -39,6 +39,10 @@ h1 {
   color: white;
   white-space: nowrap; /* 文字の折返し防止 */
 }
+.btntoukou:hover,
+.btnback12:hover{
+  background-color: #555;
+}
 
 /* ===============================
    スマホ用微調整（1か所にまとめる）

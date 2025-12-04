@@ -17,6 +17,10 @@ html, body {
 
     /* ★ここを変更（PC幅に合わせる）★ */
     background-size: 100% auto;
+    padding-top: 30px; /* error-boxの高さに合わせて調整 */
+    background: url("img/gamen1.jpg") no-repeat center center fixed;
+    background-size: cover;
+        
 }
 
 
@@ -113,7 +117,7 @@ form input {
 /* ===============================
    登録ボタン
 ================================= */
-#submitBtn {
+#tourokuBtn {
     background-color: #0078ff;
     color: white;
     width: 100%;
@@ -122,6 +126,9 @@ form input {
     cursor: pointer;
     font-size: 17px;
     border: none;
+}
+.tourokuBtn:hover {
+    background-color: #555;
 }
 .hennkou{
         background-color: #0078ff;

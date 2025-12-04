@@ -20,6 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($account_number === "" || $name === "" || $class_id === "" || $password === "") {
         $error_msg = "すべて入力してください";
     } 
+    else if (strlen($password) < 8) {
+        $error_msg = "パスワードは8文字以上で入力してください。";
+    }
     else {
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -87,11 +90,13 @@ $conn->close();
         <input type="text" name="name" required><br>
 
         <label>クラス：</label>
-        <input type="text" name="class_id" required><br>
+        <input type="text" name="class_id"pattern="\d{4}" maxlength="4"
+        title="4桁の英数字を入力してください"required><br>
 
         <label>パスワード：</label>
         <!-- セキュリティのため password 型に変更 -->
-        <input type="password" name="password" required><br>
+        <input type="password" name="password" minlength="8"
+        title="8文字以上で入力してください" required><br>
 
         <button type="submit" id="submitBtn">登録</button>
     </form>

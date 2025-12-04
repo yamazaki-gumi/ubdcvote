@@ -56,8 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error_msg = "エラーが発生しました: " . $e->getMessage();
 }
 
-    }
-
+}
 
 $conn->close();
 ?>
@@ -74,50 +73,62 @@ $conn->close();
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+
     <style>
-    /* 画面上部に固定表示するエラー */
+        /* error-box（ページ最上部固定） */
         .error-box {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            color: #ff0000;
+            color: red;
             text-align: center;
             font-weight: bold;
             padding: 10px 0;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 999;
         }
-        /* フォームがエラーに隠れないように少し余白 */
-        body {
-            padding-top: 30px; /* error-boxの高さに合わせて調整 */
-            background: url("img/gamen1.jpg") no-repeat center center fixed;
-            background-size: cover;
-        }
+
+
     </style>
 </head>
 <body>
 
+<!-- 上部固定エラー -->
 <?php if (!empty($error)): ?>
-    <div class="error-box"><?= htmlspecialchars($error) ?></div>
+    <div class="error-box"><?= htmlspecialchars($error_msg) ?></div>
 <?php endif; ?>
 
 <div class="form-container">
     <h1>ログイン</h1>
+
     <form method="POST" action="" autocomplete="off">
+
+        <!-- フォーム内エラー表示 -->
         <?php if (!empty($error_msg)): ?>
-        <p style="color:red; margin-top:10px;"><?php echo $error_msg; ?></p>
+        <p class="error-message"><?= htmlspecialchars($error_msg) ?></p>
         <?php endif; ?>
 
         <!-- 自動入力吸収用ダミー -->
         <input type="text" style="display:none">
         <input type="password" style="display:none">
 
-        <label>学籍番号:
-            <input type="text" name="account_number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+        <label>アカウント番号:
+            <input type="text" name="account_number"
+                autocomplete="off"
+                readonly onfocus="this.removeAttribute('readonly');"
+                required>
         </label><br>
+
         <label>パスワード:
-            <input type="password" name="password" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" required>
+            <input type="password" name="password"
+                autocomplete="new-password"
+                readonly onfocus="this.removeAttribute('readonly');"
+                required>
         </label><br>
-        <input type="submit" id="submitBtn"value="ログイン">
+
+        <button type="submit" id="tourokuBtn">ログイン</button>
+
         <p><a href="request_secret.php">パスワードを忘れましたか？</a></p>
 
     </form>
