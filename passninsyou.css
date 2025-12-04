@@ -4,6 +4,8 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
+    background: url("img/gamen1.jpg") no-repeat center center fixed;
+    background-size: cover;
 }
  
 /* 戻るボタン（右上固定） */

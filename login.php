@@ -89,6 +89,8 @@ $conn->close();
         /* フォームがエラーに隠れないように少し余白 */
         body {
             padding-top: 30px; /* error-boxの高さに合わせて調整 */
+            background: url("img/gamen1.jpg") no-repeat center center fixed;
+            background-size: cover;
         }
     </style>
 </head>

@@ -8,6 +8,8 @@ body {
     justify-content: center;
     align-items: flex-start;
     background: #f8f9fa;
+    background: url("img/gamen1.jpg") no-repeat center center fixed;
+    background-size: cover;
 }
 
 /* 全体を中央寄せでまとめるコンテナ */

@@ -6,12 +6,19 @@ html, body {
     padding: 0;
     font-family: "Segoe UI", sans-serif;
     background-color: #f4f4f4;
+
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;  /* 子要素を縦並びに */
-    min-height: 100vh;       /* スマホでも高さ100% */
+    min-height: 100vh;       /* 高さ100% */
+
+    background: url("img/gamen1.jpg") no-repeat center center fixed;
+
+    /* ★ここを変更（PC幅に合わせる）★ */
+    background-size: 100% auto;
 }
+
 
 /* ===============================
    戻るボタン（右上固定）

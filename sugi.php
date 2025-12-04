@@ -45,6 +45,10 @@ $result = $stmt->get_result();
  <link rel="stylesheet" href="sugi.css?v=<?php echo time(); ?>">
 <style>
    /* スクロールできる領域 */
+    body{
+    background: url("img/gamen1.jpg") no-repeat center center fixed;
+    background-size: cover;
+    }
     .scroll-box {
         max-height: 70vh;
         overflow-y: auto;

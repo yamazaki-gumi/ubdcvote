@@ -8,7 +8,9 @@ html, body { /* 変更: htmlもflexで高さ100% */
     justify-content: center;      /* 変更 */
     align-items: center;          /* 変更 */
     flex-direction: column;       /* 変更 */
-    min-height: 100vh;            /* 変更: スマホでも高さ100% */
+    min-height: 100vh;
+    background: url("img/gamen1.jpg") no-repeat center center fixed;
+    background-size: cover;        /* 変更: スマホでも高さ100% */
 }
 
 /* ------------ 中央コンテナ ------------ */

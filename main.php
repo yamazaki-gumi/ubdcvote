@@ -44,7 +44,7 @@ html, body {
     background-color: #f7f7f7;
     font-family: sans-serif;
     flex-direction: column;
-    background: url("img/main.jpg") no-repeat center center fixed;
+    background: url("img/gamen1.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 h1 {
