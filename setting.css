@@ -70,13 +70,13 @@ h1.h1 {
     color: white;
 }
 .btnlogout:hover {
-    background-color: #bbb;
+    background-color: #0056b3;
 }
 .btndelete:hover {
-    background-color: #bbb;
+    background-color: #0056b3;
 }
 .btntouroku:hover {
-    background-color: #bbb;
+    background-color: #0056b3;
 }
 
 /* ============================

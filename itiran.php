@@ -45,7 +45,7 @@ $result = $conn->query($sql);
 <style>
     /* スクロールできる領域 */
     .scroll-box {
-        max-height: 70vh;
+        max-height: 90vh;
         overflow-y: auto;
         padding-right: 10px;
     }

@@ -90,7 +90,7 @@ $conn->close();
         <input type="text" name="name" required><br>
 
         <label>クラス：</label>
-        <input type="text" name="class_id"pattern="\d{4}" maxlength="4"
+        <input type="text" name="class_id"pattern="[A-Za-z0-9]{4}" maxlength="4"
         title="4桁の英数字を入力してください"required><br>
 
         <label>パスワード：</label>
