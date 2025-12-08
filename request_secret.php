@@ -86,7 +86,7 @@ if (!empty($error)) {
         <label>学籍番号
             <input type="text" name="account_number" required>
         </label><br>
-        <input type="submit" id="submitBtn" value="確認">
+        <input type="submit" id="tourokuBtn" value="確認">
     </form>
 </div>
 

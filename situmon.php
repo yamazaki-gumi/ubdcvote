@@ -105,7 +105,7 @@ if (!empty($error)) {
             <input type="text" name="secret" required>
         </label><br>
 
-        <input type="submit" id="submitBtn" value="確認">
+        <input type="submit" id="tourokuBtn" value="確認">
     </form>
 </div>
 
