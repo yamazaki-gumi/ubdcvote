@@ -77,8 +77,18 @@ $result = $stmt->get_result();
     word-wrap: break-word;
 }
 
-.status-open { background-color: #28a745; color: #fff; }
-.status-closed { background-color: #ff9999; color: #fff; }
+.status-open { 
+    background-color: #28a745; 
+    color: #fff;
+    position: relative;
+    top: -20px; 
+}
+.status-closed { 
+    background-color: #ff9999; 
+    color: #fff; 
+    position: relative;
+    top: -20px; 
+}
 
 .touhyouzumi {
     background-color: #fc5353ff;

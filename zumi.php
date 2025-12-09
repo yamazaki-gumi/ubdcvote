@@ -69,8 +69,17 @@ $result = $stmt->get_result();
     word-break: break-word;
 }
 
-.status-open { background:#28a745; color:#fff; }
-.status-closed { background:#ff9999; color:#fff; }
+.status-open { 
+    background:#28a745; 
+    position: relative;
+    top: -20px; 
+    color:#fff; }
+.status-closed { 
+    background:#ff9999; 
+    color:#fff; 
+    position: relative;
+    top: -20px; 
+}
 
 .return-top-btn {
     position: fixed;

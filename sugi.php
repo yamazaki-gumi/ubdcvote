@@ -116,8 +116,18 @@ body {
     bottom: 15px;
 }
 
-.status-open  { background-color: #28a745; color: #fff; }
-.status-closed{ background-color: #ff9999; color: #fff; }
+.status-open  { 
+    background-color: #28a745; 
+    color: #fff; 
+    position: relative;
+    top: -20px; 
+}
+.status-closed{ 
+    background-color: #ff9999; 
+    color: #fff; 
+    position: relative;
+    top: -20px; 
+}
 
 /* スマホ */
 @media (max-width: 576px) {
