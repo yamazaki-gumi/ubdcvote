@@ -41,6 +41,11 @@ $result = $stmt->get_result();
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+    body {
+
+    background: url("img/gamen1.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
 .scroll-box {
     max-height: 70vh;
     overflow-y: auto;
@@ -188,7 +193,7 @@ $result = $stmt->get_result();
         <?php if ($already_voted): ?>
             <form action="kekka2.php" method="GET">
                 <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
-                <button type="submit" class="btn btn-success resultbtn">結果を見る</button>
+                <button type="submit" class="btn btn-success resultbtn">結果</button>
             </form>
         <?php else: ?>
             <form action="touhyou2.php" method="GET">

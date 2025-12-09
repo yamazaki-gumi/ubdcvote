@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
 
             <!-- クラスID（空欄OK） -->
             <div class="mb-2">
-                <label>クラスID（空欄で全体公開）：</label>
+                <label>クラスID：</label>
                 <input type="text" name="class_id" class="form-control" placeholder="例：US4A、未入力で全体公開">
             </div>
 

@@ -172,7 +172,7 @@ body {
     <div class="btn-area">
         <form action="kekka3.php" method="GET">
             <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
-            <button type="submit" class="btn btn-success btn-lg">結果miru</button>
+            <button type="submit" class="btn btn-success btn-lg">結果</button>
         </form>
     </div>
 
