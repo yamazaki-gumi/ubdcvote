@@ -1,222 +1,197 @@
 <?php
 session_start();
- 
+
 if (!isset($_SESSION['account_number'])) {
     header("Location: login.php");
     exit();
 }
- 
+
 $account_number = $_SESSION['account_number'];
- 
+
 $conn = new mysqli("localhost", "root", "", "toukounaiyou_db");
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
 }
- 
+
+$getClass = $conn->prepare("SELECT class_id FROM accounts WHERE account_number = ?");
+$getClass->bind_param("s", $account_number);
+$getClass->execute();
+$getClass->bind_result($my_class_id);
+$getClass->fetch();
+$getClass->close();
+
 $sql = "
 SELECT
     v.id,
     v.title,
     v.start_date,
     v.end_date,
+    v.class_id,
     a.name AS creator_name
 FROM votes v
 LEFT JOIN accounts a
     ON v.account_id = a.account_number
-WHERE v.flag = 1 AND CURDATE() BETWEEN start_date AND end_date
+WHERE 
+    v.flag = 1
+    AND CURDATE() BETWEEN v.start_date AND v.end_date
+    AND (v.class_id = ? OR v.class_id IS NULL)
 ORDER BY v.id DESC
 ";
-$result = $conn->query($sql);
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $my_class_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
- 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>投票一覧</title>
- 
-<!-- Bootstrap -->
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
- 
-<!-- CSSファイル -->
-<link rel="stylesheet" href="itiran.css?v=<?php echo time(); ?>">
- 
+<link rel="stylesheet" href="itiran.css?v=<?= time(); ?>">
+
 <style>
-    /* スクロールできる領域 */
-    .scroll-box {
-        max-height: 90vh;
-        overflow-y: auto;
-        padding-right: 10px;
-    }
- 
-    /* カード装飾 */
-    .vote-card {
-        border: 1px solid #ccc;
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 15px;
-        background: #fff;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
- 
-    /* ▼変更済み：フォント数字指定可能 */
-    .vote-title {
-        font-size: 2.5rem;
-        font-weight: 900;
-        position: relative;
-        top: -12px;
-        left: 5px;
-    }
- 
-    .creator-text,
-    .vote-period {
-        font-size: 1.4rem;
-        font-weight: 500; /* ←変更自由 */
-        position: relative;
-        top: 70px;
-        left: 10px;
-    }
- 
-    .status-open {
-        background-color: #28a745;
-        color: #fff;
-    }
- 
-    .status-closed {
-        background-color: #ff9999;
-        color: #fff;
-    }
- 
-    /* 作成者と期間の横幅余白 */
-    .info-area {
-        display: flex;
-        gap: 30px; /* ←調整可能 */
-        align-items: center;
-    }
-    .sp-only {
-    display: none;
-    }
-    .pc-only {
-    display: inline;
-    } 
-    .touhyouzumi {
+.scroll-box {
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.vote-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    position: relative; /* ← 右下配置の土台 */
+}
+
+.vote-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    word-wrap: break-word;
+}
+
+.status-open { background-color: #28a745; color: #fff; }
+.status-closed { background-color: #ff9999; color: #fff; }
+
+.touhyouzumi {
     background-color: #fc5353ff;
     border: none;
     padding: 9px 15px;
-    font-size: 1.3em;
+    font-size: 1.2em;
     border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-    display: block;
-    margin: 0 auto;
     color: #fff;
 }
-    @media (max-width: 576px) {
-    .vote-title {
-    font-size: 1rem;
-    font-weight: 400; /* ← 数値指定OK（100～900）*/
-    }
-    .creator-text{
-    font-size: 0.9rem;
-    font-weight: 400; /* ← お好きな数字に変更可能 */
-    }  
-    .vote-period {
-    font-size: 0.7rem;
-    font-weight: 400; /* ← お好きな数字に変更可能 */
-    } 
-    .sp-only {
-    display: inline;
-    } 
-    .pc-only {
-    display: none;
-    } 
-    }
+
+/* 戻るボタン右上 */
+.return-top-btn {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    z-index: 1000;
+}
+
+.info-area-bottom {
+    display: block;
+    margin-top: 10px;
+    padding-top: 8px;
+    /* border-top を削除 */
+}
+
+.creator-text,
+.vote-period {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 2px 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+}
+
+/* 投票ボタンを右下に固定 */
+.vote-btn-area {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+}
+
+@media (max-width: 576px) {
+    .vote-title { font-size: 1.4rem; }
+    .creator-text { font-size: 1rem; }
+    .vote-period { font-size: 0.8rem; }
+}
 </style>
 </head>
- 
+
 <body class="container mt-4">
- 
-<a href="main.php" class="btn btn-secondary return-btn">戻る</a>
-<h2>投票一覧</h2>
- 
-<!-- スクロールコンテナ -->
+
+<a href="main.php" class="btn btn-secondary return-top-btn">戻る</a>
+
+<h2 class="mb-3">投票一覧</h2>
+
 <div class="scroll-box">
- 
+
 <?php while ($row = $result->fetch_assoc()): ?>
 <?php
     $vote_id = $row['id'];
- 
-    // 投票済み確認
+
     $check = $conn->prepare("SELECT 1 FROM vote_count WHERE vote_id = ? AND account_id = ?");
     $check->bind_param("ii", $vote_id, $account_number);
     $check->execute();
     $already_voted = $check->get_result()->num_rows > 0;
- 
-    // 状態表示
+
     $now = date("Y-m-d");
-    if ($now >= $row['start_date'] && $now <= $row['end_date']) {
-        $status = "集計中";
-    } else {
-        $status = "締め切り";
-    }
+    $status = ($now >= $row['start_date'] && $now <= $row['end_date']) ? "集計中" : "締め切り";
 ?>
- 
-<!-- 1つの投票カード -->
+
 <div class="vote-card">
- 
-    <!-- タイトルとステータス -->
-    <div class="d-flex justify-content-between">
+
+    <!-- タイトル＋ステータス -->
+    <div class="d-flex justify-content-between align-items-center">
         <div class="vote-title"><?= htmlspecialchars($row['title']); ?></div>
         <div>
-        <?php if ($status === "集計中"): ?>
-            <span class="badge status-open"><?= $status ?></span>
-        <?php else: ?>
-            <span class="badge status-closed"><?= $status ?></span>
-        <?php endif; ?>
+            <?php if ($status === "集計中"): ?>
+                <span class="badge status-open"><?= $status ?></span>
+            <?php else: ?>
+                <span class="badge status-closed"><?= $status ?></span>
+            <?php endif; ?>
         </div>
     </div>
- 
-    <!-- 作成者 + 期間 → 横並び変更済み -->
-    <span class="pc-only">
-    <div class="info-area mt-2 text-muted">
-        <div class="creator-text">作成者：<?= htmlspecialchars($row['creator_name']); ?></div>
-        <div class="vote-period">投票期間：<?= htmlspecialchars($row['start_date']) ?> ～ <?= htmlspecialchars($row['end_date']) ?></div>   
-    </div>
-    </span>
-    <span class="sp-only"> 
-    <div class="info-area mt-2 text-muted">
-        <div class="creator-text">作成者：<?= htmlspecialchars($row['creator_name']); ?></div>
-    </div>
-    <div class="info-area mt-2 text-muted">
-        <div class="vote-period">投票期間：<?= htmlspecialchars($row['start_date']) ?> ～ <?= htmlspecialchars($row['end_date']) ?></div>   
-    </div>
-    </span>
-    <!-- 操作用ボタン -->
-    <div class="d-flex justify-content-end align-items-center mt-3">
- 
+
+    <!-- 投票ボタンを右下に固定 -->
+    <div class="vote-btn-area">
         <?php if ($already_voted): ?>
-            <form>
-                <label class="touhyouzumi">投票済み</label>
-            </form>
+            <span class="touhyouzumi">投票済み</span>
         <?php else: ?>
-            <form action="touhyou.php" method="GET" style="display:inline;">
+            <form action="touhyou.php" method="GET">
                 <input type="hidden" name="vote_id" value="<?= $row['id']; ?>">
                 <button type="submit" class="btn btn-primary btn-lg">投票する</button>
             </form>
         <?php endif; ?>
- 
     </div>
- 
+
+    <!-- 作成者・投票期間 -->
+    <div class="info-area-bottom text-muted">
+        <div class="creator-text">
+            作成者：<?= htmlspecialchars($row['creator_name']); ?>
+        </div>
+        <div class="vote-period">
+            投票期間：<?= htmlspecialchars($row['start_date']) ?> ～ <?= htmlspecialchars($row['end_date']) ?>
+        </div>
+    </div>
+
 </div>
-<!-- カード終了 -->
- 
 <?php endwhile; ?>
- 
-</div><!-- scroll box -->
+
+</div>
 </body>
 </html>
- 
+
 <?php $conn->close(); ?>
- 
- 

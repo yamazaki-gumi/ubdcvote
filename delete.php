@@ -27,7 +27,7 @@ if ($stmt->execute()) {
     session_destroy();
     echo "<script>
             setTimeout(function(){
-                window.location.href = 'login.php';
+                window.location.href = 'gamen1.php';
             });
           </script>";
 } else {
