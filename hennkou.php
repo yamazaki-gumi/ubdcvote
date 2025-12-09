@@ -23,6 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($new_password === "") {
         $error = "パスワードを入力してください。";
     } 
+    else if (strlen($new_password) < 8) {
+        $error = "パスワードは8文字以上で入力してください。";
+    }
     else {
         $hash = password_hash($new_password, PASSWORD_DEFAULT);
         $account_number = $_SESSION["account_number"];
@@ -72,9 +75,10 @@ $conn->close();
 <?php else: ?>
 <form method="POST">
 
-<label>新しいパスワード
-    <input type="password" name="new_password" required>
-</label>
+        <label>パスワード：</label>
+        <!-- セキュリティのため password 型に変更 -->
+        <input type="password" name="new_password" minlength="8"
+        title="8文字以上で入力してください" required><br>
 
 <input class=hennkou type="submit" value="変更する">
 
