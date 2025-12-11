@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     } else {
-        $error = "学籍番号が間違っています。";
+        $error = "アカウント番号が間違っています。";
     }
 
     $stmt->close();
@@ -83,7 +83,7 @@ if (!empty($error)) {
         <input type="text" style="display:none">
         <input type="password" style="display:none">
 
-        <label>学籍番号
+        <label>アカウント番号
             <input type="text" name="account_number" required>
         </label><br>
         <input type="submit" id="tourokuBtn" value="確認">
