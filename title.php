@@ -84,8 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['title'])) {
 <div class="container-center">
     <div class="main-box">
         <h2>タイトル登録</h2>
-        <h1>ようこそ <?= htmlspecialchars($name); ?> さん</h1>
-
+        
         <?php if ($error_msg): ?>
             <p style="color:red; text-align:center;"><?= $error_msg ?></p>
         <?php endif; ?>
