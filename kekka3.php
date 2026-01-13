@@ -84,7 +84,7 @@ $result2 = $stmt2->get_result();
 <body class="container mt-4">
  
 <h2 class="mb-3">投票結果：<?= htmlspecialchars($vote['title']); ?></h2>
-<p>ようこそ <?= htmlspecialchars($name); ?> さん</p>
+
  
 <!-- スクロール可能領域 -->
 <div class="scroll-box">
