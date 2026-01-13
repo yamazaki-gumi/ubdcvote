@@ -50,7 +50,7 @@ $result = $stmt->get_result();
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>あなたの投票結果</title>
+<title>投票結果</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -142,7 +142,7 @@ body {
 
 <a href="main.php" class="btn btn-secondary return-top-btn">戻る</a>
 
-<h2><?= htmlspecialchars($name) ?> さんの投票結果</h2>
+<h2>投票結果</h2>
  
 <div class="scroll-box">
  

@@ -151,7 +151,7 @@ $result = $stmt->get_result();
 
 <a href="main.php" class="btn btn-secondary return-top-btn">戻る</a>
 
-<h2 class="mb-3">投票一覧</h2>
+<h2>あなたが作成した投票</h2>
 
 <div class="scroll-box">
 
