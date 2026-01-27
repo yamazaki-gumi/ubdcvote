@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2025-12-10 02:46:56
+-- 生成日時: 2026-01-27 03:17:20
 -- サーバのバージョン： 10.4.32-MariaDB
 -- PHP のバージョン: 8.2.12
 
@@ -33,7 +33,10 @@ CREATE TABLE `accounts` (
   `name` varchar(100) NOT NULL,
   `class_id` char(4) NOT NULL,
   `secret_situmon` varchar(30) NOT NULL,
-  `secret` varchar(255) NOT NULL,
+  `secret` varchar(30) NOT NULL,
+  `failed_count` int(11) NOT NULL DEFAULT 0,
+  `is_locked` tinyint(1) NOT NULL DEFAULT 0,
+  `locked_at` datetime DEFAULT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -41,15 +44,11 @@ CREATE TABLE `accounts` (
 -- テーブルのデータのダンプ `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `account_number`, `name`, `class_id`, `secret_situmon`, `secret`, `password`) VALUES
-(50, 5656, 'ルヒー', 'US10', '海で一番自由なやつは？', '海賊王', '$2y$10$BvhU5CucykUDvb/FB4VQWesVvkq5dQdP/50BgX0lJBoUFu7MHV8JG'),
-(51, 6666, '悪魔', 'US10', '昨日たべたもの', '寿司', '$2y$10$gvlkV3oljzFzrH9qDO8ym.ygyP2/pRHPCKEsl3OCfrVan2pekV//G'),
-(53, 9999, 'shibal', 'US10', '韓国のキムチは？', 'キムチ', '$2y$10$sixGUMYME7JBHu5AyLeHn.4pCwJ6zn91i3eGNdZSkMV08bHvLKTTm'),
-(55, 402, 'あにし', 'US4A', '今日の朝ごはんは？', 'パン', '$2y$10$PN2KdPe3bKb2dkzEwqZLweh8H0MXc0gUy93/mrFvAOqOseeW9cCRC'),
-(57, 910, 'charlie kirk', 'US4A', 'when did kirk die in', '0910', '$2y$10$Go/c.Bi7rKwZ3p2pAEejs.qjcfJ3eyN7DCujx4VaPolxBRMMB7GVC'),
-(58, 4321, 'にと', 'US4A', '笠原ケイトとは何人', 'ウイグル人', '$2y$10$UvDYYEuIapDxE80pGhSeTe16j9A/8IMd7GdJFYXX85vYp3um4PmpW'),
-(60, 6789, 'にところ', 'US3A', 'ところは何人', 'ウイグル人', '$2y$10$q1eC6BWZrIgNMsmfx0Y0Zu2VtqTamgVv5gCJOqmhdd/lmiEl1bLIO'),
-(61, 9876, 'ところに', 'US3A', 'ところは', 'ウイグル人', '$2y$10$1EYBM9ElQU61rb5s072Wn.xo3xn/G7FIP2Sc9uIJRomdfBC2eMDtG');
+INSERT INTO `accounts` (`id`, `account_number`, `name`, `class_id`, `secret_situmon`, `secret`, `failed_count`, `is_locked`, `locked_at`, `password`) VALUES
+(73, 1234, 'かみお', 'US4A', '好きな食べもの', 'ラーメン', 0, 0, NULL, '$2y$10$mYs4AYnjhoeBxYfDHVJPpOe.h3..rXdFt.LT9.ScZRdAkvXLQHbVy'),
+(74, 1111, 'ゲスト１', 'US4A', '好きな食べもの', 'ラーメン', 0, 0, NULL, '$2y$10$bhR6Sa2S1Z3yWvv0qPsw6e9tv1S.fBG2dGeEw4.NPTE3qEtTXJvx6'),
+(77, 4321, 'はが', 'US4A', '好きな食べもの', 'ラーメン', 0, 0, NULL, '$2y$10$mM2j7HDGibCms3/rMcBTdetvoCjQZrUhbv1X7WB27PRzgcH1zhFoq'),
+(78, 2222, 'ゲスト２', 'US4A', '好きな食べもの', 'ラーメン', 0, 0, NULL, '$2y$10$cgJRUMtY26xtrbfmDp0tq.DzpQGC/o19ismmHDXUuzbt1qliXMZru');
 
 --
 -- トリガ `accounts`
@@ -81,36 +80,15 @@ CREATE TABLE `sennta` (
 --
 
 INSERT INTO `sennta` (`id`, `senntaku`, `title_id`, `vote_count`) VALUES
-(90, 'だめ', 66, 0),
-(91, 'だめじゃない', 66, 0),
-(105, 'GAY', 107, 1),
-(106, 'GAY', 107, 0),
-(107, '中国人', 108, 2),
-(108, '中国人', 108, 0),
-(109, '北朝鮮人', 108, 0),
-(110, '岡田', 109, 0),
-(111, '間井田', 109, 2),
-(112, 'かふぁ', 110, 0),
-(113, 'ふぁえｇふぁ', 110, 0),
-(114, 'YES', 112, 2),
-(115, 'NO', 112, 0),
-(116, '眠い', 113, 0),
-(117, '眠くない', 113, 0),
-(118, 'ウイグル人', 114, 0),
-(119, '中国人', 114, 0),
-(120, 'ねむ', 115, 0),
-(121, 'ねむない', 115, 0),
-(122, 'する', 117, 0),
-(123, 'しない', 117, 0),
-(135, 'ｆｈ', 127, 0),
-(136, 'ストリーマー', 128, 0),
-(137, 'ラッパー', 128, 0),
-(138, 'N', 129, 0),
-(139, 'C', 129, 0),
-(140, 'ｂぎぎうぐう', 130, 0),
-(142, '知らねーよ', 132, 0),
-(143, '馬鹿野郎', 134, 0),
-(144, '大馬鹿野郎', 134, 0);
+(160, '大阪', 146, 0),
+(161, '京都', 146, 1),
+(162, '受ける', 147, 2),
+(163, '受けたくない', 147, 0),
+(164, 'お米', 148, 1),
+(165, 'パン', 148, 2),
+(166, 'イチゴ', 149, 2),
+(167, '餃子', 149, 0),
+(168, '日光東照宮', 149, 0);
 
 -- --------------------------------------------------------
 
@@ -133,25 +111,10 @@ CREATE TABLE `votes` (
 --
 
 INSERT INTO `votes` (`id`, `title`, `start_date`, `end_date`, `account_id`, `flag`, `class_id`) VALUES
-(66, '天使になる', '2026-01-21', '2026-02-26', 6666, 1, ''),
-(107, '間井田はMENかGAYか', '2025-12-02', '2025-12-03', 4321, 1, ''),
-(108, '戸頃は中国人か北朝鮮人か', '2025-12-02', '2025-12-03', 4321, 1, ''),
-(109, '岡田か間井田か', '2025-12-02', '2025-12-03', 4321, 1, ''),
-(110, 'あああｆかおｆｋ', '2025-12-02', '2025-12-01', 4321, 1, ''),
-(111, 'ｈそｈこｐｈｋｓｐ', '2025-12-02', '2025-12-01', 4321, 0, ''),
-(112, 'title.phpは簡潔にすべきか', '2025-12-03', '2025-12-04', 4321, 1, ''),
-(113, '眠いか眠くないか', '2025-12-08', '2025-12-09', 4321, 1, 'US4A'),
-(114, '二戸頃は何人', '2025-12-07', '2025-12-09', 9876, 1, 'US3A'),
-(115, '眠いか眠くないか', '2025-12-08', '2025-12-09', 4321, 1, 'US4A'),
-(116, 'ｃ', '2025-12-08', '2025-12-09', 6789, 1, 'US3A'),
-(117, 'ヘアセットするか、しないか', '2025-12-09', '2025-12-10', 4321, 1, ''),
-(118, '片方だけがやるか、同時進行か', '2025-12-09', '2025-12-10', 4321, 0, ''),
-(127, 'ｆかｈ', '2025-12-09', '2025-12-10', 4321, 1, NULL),
-(128, 'ｄｄｇはストリーマーか', '2025-12-09', '2025-12-10', 4321, 1, NULL),
-(129, 'NかCか', '2025-12-09', '2025-12-10', 6789, 1, ''),
-(130, 'んヴぃヴぃう', '2025-12-10', '2025-12-11', 6789, 1, 'US4A'),
-(132, 'できたぞ馬鹿野郎', '2025-12-09', '2025-12-10', 6789, 1, 'US3A'),
-(134, '馬鹿か神尾は', '2025-12-07', '2025-12-08', 4321, 1, 'US4A');
+(146, '大阪に行くか京都にいくか', '2026-01-27', '2026-01-28', 4321, 1, 'US4A'),
+(147, '応用情報の模擬試験受けるか', '2026-01-27', '2026-01-28', 4321, 1, 'US4A'),
+(148, '朝ごはんはどっち派？', '2026-01-27', '2026-01-28', 1234, 1, NULL),
+(149, '栃木といえば？', '2026-01-27', '2026-01-28', 1234, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -172,13 +135,14 @@ CREATE TABLE `vote_count` (
 --
 
 INSERT INTO `vote_count` (`id`, `vote_id`, `sennta_id`, `account_id`, `created_at`) VALUES
-(68, 107, 105, 4321, '2025-12-02 05:06:14'),
-(69, 108, 107, 4321, '2025-12-02 06:08:03'),
-(70, 109, 111, 4321, '2025-12-02 06:08:12'),
-(71, 112, 114, 4321, '2025-12-03 00:43:59'),
-(72, 112, 114, 910, '2025-12-03 00:50:15'),
-(73, 109, 111, 910, '2025-12-03 04:35:46'),
-(74, 108, 107, 910, '2025-12-03 04:36:08');
+(81, 147, 162, 1234, '2026-01-27 00:45:36'),
+(82, 146, 161, 1234, '2026-01-27 00:45:49'),
+(83, 149, 166, 1234, '2026-01-27 00:45:59'),
+(84, 149, 166, 4321, '2026-01-27 00:48:36'),
+(85, 147, 162, 4321, '2026-01-27 00:48:45'),
+(86, 148, 165, 1111, '2026-01-27 00:54:56'),
+(87, 148, 164, 2222, '2026-01-27 00:55:00'),
+(88, 148, 165, 1234, '2026-01-27 00:55:01');
 
 --
 -- ダンプしたテーブルのインデックス
@@ -224,25 +188,25 @@ ALTER TABLE `vote_count`
 -- テーブルの AUTO_INCREMENT `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- テーブルの AUTO_INCREMENT `sennta`
 --
 ALTER TABLE `sennta`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- テーブルの AUTO_INCREMENT `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- テーブルの AUTO_INCREMENT `vote_count`
 --
 ALTER TABLE `vote_count`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- ダンプしたテーブルの制約
